@@ -1,1 +1,44 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(60, 58, 58);
+}
 
+#login_div{
+  width: 300px;
+  border: solid rgb(227, 158, 227);
+  margin: auto;
+  padding: 50px;
+}
+
+#login_title{
+  color: white;
+  background-color: gray;
+  margin-bottom: 10px;
+  margin-right: 25px;
+}
+
+.input-group label {
+  color: white;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#submit_button{
+  width: 100%;
+  padding: 10px;
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#submit_button:hover {
+  background-color: darkgray;
+}
