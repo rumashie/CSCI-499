@@ -32,7 +32,7 @@ body {
 
 #user-email input[type="email"]{
     background-color:rgb(33, 33, 33);
-    margin: .05em;
+    margin: .5%; //fixed slight bug in UI
     border: 2px solid;
     padding: 1em 2em;
     font-size: 1em;
