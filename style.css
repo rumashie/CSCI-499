@@ -1,44 +1,80 @@
-html, body {
-  height: 100%;
-  width: 100%;
-  background-color: rgb(60, 58, 58);
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color:#191919;
+    
+    
+  }
+
+
+#login button {
+
+    background: none;
+    color: #b3f2f2;
+    border: 2px solid;
+    padding: 1em 2em;
+    font-size: 1em;
+    transition: all 500ms;
+    border-radius: 2em;
+
 }
 
-#login_div{
-  width: 300px;
-  border: solid rgb(227, 158, 227);
-  margin: auto;
-  padding: 50px;
+#login button:hover {
+    border-color: rgb(131, 237, 237);
+    color: white;
+    box-shadow: 0 0.5em 0.5em -0.4em aquamarine;
+    transform: translateY(-.15em);
+    cursor: pointer;
 }
 
-#login_title{
-  color: white;
-  background-color: gray;
-  margin-bottom: 10px;
-  margin-right: 25px;
+#user-email input[type="email"]{
+    background-color:rgb(33, 33, 33);
+    margin: .05em;
+    border: 2px solid;
+    padding: 1em 2em;
+    font-size: 1em;
+    border-color: rgb(165, 222, 229);
+    color: white;
+    border-radius: 2em;
+
 }
 
-.input-group label {
-  color: white;
+#password input[type="password"]{
+    background-color:rgb(33, 33, 33);
+    margin: 5%;
+    border: 2px solid;
+    padding: 1em 2em;
+    font-size: 1em;
+    border-color:rgb(165, 222, 229);
+    border-radius: 2em;
+   
+    
+
+    
 }
 
-.input-group input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+section {
+   width: 300px;
+   top: 50%;
+   bottom: 50%;
+   padding: 80px;
+   background-color:#191918;
+   text-align: center;
+   border-style: solid;
+   border-top: 10%;
+   border-width: 5px;
+   border-bottom: 50%;
+   border-color: rgb(134, 151, 187);
+   border-radius: 1em;
+   box-shadow: 10px 10px 2px 1px rgb(37, 42, 52);
+    
 }
 
-#submit_button{
-  width: 100%;
-  padding: 10px;
-  background-color: gray;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-#submit_button:hover {
-  background-color: darkgray;
+h1 {
+    color: white;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:2.5em
 }
