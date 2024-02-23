@@ -52,8 +52,10 @@ def create_service(client_secret_file, api_name, api_version, *scopes, prefix=''
         print(f'Failed to create service instance for {API_SERVICE_NAME}')
         os.remove(os.path.join(working_dir, token_dir, token_file))
         return None
-
-# converts into a datetime format that can be used for creating events
+"""
+converts into a datetime format that can be used for creating events
+    string: a string of the with date and time in a format like this "2/25/2024 7:00am" or "11/25/2024 11:00pm"
+"""
 def convert_to_datetime(string):
     date_str, time_str = string.split()
     datetime_str = f"{date_str} {time_str}"
