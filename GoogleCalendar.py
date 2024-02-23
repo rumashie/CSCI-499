@@ -1,4 +1,3 @@
-from pprint import pprint
 from Google import create_service, convert_to_datetime
 
 #basic setup for using the Google Calendar API
@@ -28,8 +27,10 @@ def delete_calendar(calendar_name):
     id = get_calendarID(calendar_name)
     if id:
         service.calendars().delete(calendarId=id).execute()
+        return True
     else:
         print("Calendar doesn't exist")
+        return False
 
 """
 Uses the name of the calendar to locate and return its associated ID
@@ -89,8 +90,10 @@ def add_event(calendar_name, event_name, start_time, end_time, description=''):
             supportsAttachments=supportsAttachments,
             body=event_request_body
         ).execute()
+        return True
     else:
         print("Calendar doesn't exist")
+        return False
 
 """
 Return the ID of the inputed event
@@ -123,5 +126,7 @@ def delete_event(calendar_name, event_name):
             calendarId=calendarID,
             eventId=eventID
         ).execute()
+        return True
     else:
         print("Either calendar or event doesn't exist")
+        return False
