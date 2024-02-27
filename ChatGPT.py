@@ -75,7 +75,6 @@ while message != "exit":
     message_log.append({"role": "assistant", "content": reply})
     # splits the infromation for a calendar related function
     info = reply.split(", ")
-    print(info)
     # checks the first element of the list info to see if a calendar function was called 
     if info[0] == "Create calendar":
         create_calendar(info[1])
