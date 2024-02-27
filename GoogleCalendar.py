@@ -18,6 +18,7 @@ def create_calendar(calendar_name):
         'summary' : calendar_name
     }
     service.calendars().insert(body=request_body).execute()
+    print("\n", "Calendar called", calendar_name, "has been created.", "\n")
 
 """
 Deletes an existing calendar
@@ -27,10 +28,9 @@ def delete_calendar(calendar_name):
     id = get_calendarID(calendar_name)
     if id:
         service.calendars().delete(calendarId=id).execute()
-        return True
+        print("\n", "Calendar called", calendar_name, "was deleted.", "\n")
     else:
         print("Calendar doesn't exist")
-        return False
 
 """
 Uses the name of the calendar to locate and return its associated ID
@@ -49,7 +49,7 @@ def get_calendarID(calendar_name):
     return None
 
 """
-Adds an Event to an existing calendar users can add information like start, end, and an optional description to there event
+Creates an Event to an existing calendar users can add information like start, end, and an optional description to there event
     Event start and end time must be in this format "2/25/2024 7:00am" or "11/25/2024 11:00pm"
 
     calendar_name: name of the calendar
@@ -58,7 +58,7 @@ Adds an Event to an existing calendar users can add information like start, end,
     end_time: the end date and time of the event
     description: the optional description of the event
 """
-def add_event(calendar_name, event_name, start_time, end_time, description=''):
+def create_event(calendar_name, event_name, start_time, end_time, description=''):
     calendarId = get_calendarID(calendar_name)
     if calendarId:
         event_request_body = {
@@ -90,10 +90,9 @@ def add_event(calendar_name, event_name, start_time, end_time, description=''):
             supportsAttachments=supportsAttachments,
             body=event_request_body
         ).execute()
-        return True
+        print("\n", "Created Event", event_name, "on", calendar_name, "from", start_time, "to", end_time, "\n")
     else:
-        print("Calendar doesn't exist")
-        return False
+        print("\n", "Calendar doesn't exist", "\n")
 
 """
 Return the ID of the inputed event
@@ -126,7 +125,6 @@ def delete_event(calendar_name, event_name):
             calendarId=calendarID,
             eventId=eventID
         ).execute()
-        return True
+        print("\n", "The event called", event_name, "was deleted.", "\n")
     else:
-        print("Either calendar or event doesn't exist")
-        return False
+        print("\n", "Either calendar or event doesn't exist", "\n")

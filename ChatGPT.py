@@ -1,81 +1,93 @@
 from openai import OpenAI
 import constants
-from GoogleCalendar import create_calendar, delete_calendar, add_event, delete_event
+from GoogleCalendar import create_calendar, delete_calendar, create_event, delete_event
 
 
 # copy your openai secret key to api_key
 client = OpenAI(api_key = constants.APIKEY)
 
+"""
+this classifier allows the chat bot to determine if the user is asking a general question 
+to which it will respond with an answer or if the user is trying to something to their calendar
+in that case responds with a list containing information related to the function that will be called
+"""
+classifier = """You are a chatbot assistant that helps people with their daily tasks. I want for you to respond to questions depending on what you think they are the type of question they are.
+The possible types of questions are:
+- A general question, that can be answered by the chatbot
+- A request to do something with their calendar
+If you think the question is a general question that can be answered over the internet, then answer their question. 
+If you think the question is a request to do something to their calendar, then give me a phase that corrisponds to the action they want to do. 
+Then give me the attributes needed to perform each task from the user input. 
+The attributes I need for each task goes as folowed:
+Create calendar: calendar_name
+Delete calendar: calendar_name
+Create event: calendar_name, event_name, start_time, end_time, and an optional description (NOTE: start_time and end_time must contain a date and be in this format 2/25/2024 7:00am)
+Delete event: calendar_name, event_name
+
+IF ANY ATTRIBUTE IS MISSING PLEASE ASK THE USER FOR THE MISSING ATTRIBUTE!
+IF THEY DON'T SPECIFY A DATE ASK THEM FOR THAT!
+MAKE SURE START AND END TIMES ARE IN THIS FORMAT 2/25/2024 7:00am NOTHING SHOULD BE LEFT OUT, YOU NEED MONTH, DAY, YEAR, AND TIME!
+
+Examples: 
+
+Question: can you create an event on my school calendar called lunch at 12pm for 2 hours
+Response: What is the date of the event you want to create?
+
+Question: Create a calendar called test calendar
+Response: Create calendar, test calendar
+
+Question: Create an event called lunch at feb 25 2024 at 2pm for 2 hours on my test calendar
+Response: Create event, test calendar, lunch, 2/25/2024 2:00pm, 2/25/2024 4:00pm
+
+Question: Create an event called breakfast with friends at feb 25 2024 at 11pm for 4 hours on my test calendar with the description of lunch with my friends from school
+Response: Create event, test calendar, breakfast with friends, 2/25/2024 11:00am, 2/25/2024 3:00pm, lunch with my friends from school
+
+Question: Create an event called breakfast with friends at feb 25 2024 at 11pm for 4 hours with the description of lunch with my friends from school
+Response: What calendar do you want to add it to?
+
+Question: Create an event called breakfast with friends at 11pm for 4 hours on my test calendar with the description of lunch with my friends from school
+Response: What is the date of the event you want to create?
+
+Question: Delete test calendar for me
+Response: Delete calendar, test calendar
+
+Question: Delete lunch with friends on my test calendar
+Response: Delete event, lunch with friends, test calendar
+
+"""
 # api will recieve these messages to make a response
-message_log = []
+message_log = [{'role' : "system", "content" : classifier}]
 message = ""
 # will allow users to keep asking multiple messages
 while message != "exit":
     # take an input so the user can ask a question
     message = input()
-    # create calendar <calendar name>
-    if "create calendar" in message:
-        info = message.split()
-        start = info.index("calendar") + 1
-        info = info[start:]
-        calendar_name = ' '.join(info)
-        create_calendar(calendar_name)
-        print(calendar_name, "has been created.")
-    # delete calendar <calendar name>
-    elif "delete calendar" in message:
-        info = message.split()
-        start = info.index("calendar") + 1
-        info = info[start:]
-        calendar_name = ' '.join(info)
-        if delete_calendar(calendar_name):
-            print(calendar_name, "has been deleted.")
-    # add event <event name> in <calendar name> from <start date> at <start time> to <end date> at <end time> (with the description <description>) this part is optional
-    # start and end date should be in this format 2/25/2024 or 11/5/2025
-    # start and end times should be in this format 7:00am or 11:40pm
-    elif "add event" in message:
-        info = message.split(" in ")
-        event_name = info[0].replace("add event ", "")
-        calendar_name = info[1].split(" from ")[0]
-        time_part = info[1].split(" from ")[1]
-        time_parts = time_part.split(" to ")
-        start_time = time_parts[0]
-        start_time = start_time.replace(" at ", " ")
-        if "with the description" in time_parts[1]:
-            info = time_parts[1].split(" with the description ")
-            end_time = info[0].replace(" at ", " ")
-            description = info[1]
-            if add_event(calendar_name, event_name, start_time,  end_time, description):
-                print(event_name, "has been added to", calendar_name + ".")
+    # append the message to the list
+    message_log.append({"role": "user", "content": message})
+    # connect to the api in order for the api to bring back a response
+    chat_completion = client.chat.completions.create(
+        messages=message_log,
+        model="gpt-3.5-turbo"
+    )
+    # the answer to the prompted question
+    reply = chat_completion.choices[0].message.content
+    # appends the message to the list so that the chatbot remembers the chat history
+    message_log.append({"role": "assistant", "content": reply})
+    # splits the infromation for a calendar related function
+    info = reply.split(", ")
+    print(info)
+    # checks the first element of the list info to see if a calendar function was called 
+    if info[0] == "Create calendar":
+        create_calendar(info[1])
+    elif info[0] == "Delete calendar":
+        delete_calendar(info[1])
+    elif info[0] == "Create event":
+        if len(info) == 5:
+            create_event(info[1], info[2], info[3], info[4])
         else:
-            info = info[1].split(" to ")
-            end_time = info[1]
-            end_time = end_time.replace(" at ", " ")
-            if add_event(calendar_name, event_name, start_time,  end_time):
-                print(event_name, "has been added to", calendar_name + ".")
-    # remove event <event name> from <calendar name>
-    elif "remove event" in message:
-        info = message.split()
-        start = info.index("event") + 1
-        end = info.index("from")
-        event_name = info[start:end]
-        event_name = " ".join(event_name)
-        calendar_name = info[end+1:]
-        calendar_name = " ".join(calendar_name)
-        if delete_event(calendar_name, event_name):
-            print(event_name, "has been removed from", calendar_name + ".")
-
-    # if not making changes to calendar then the chatbot will respond
+            create_event(info[1], info[2], info[3], info[4], info[5])
+    elif info[0] == "Delete event":
+        delete_event(info[1], info[2])
+    #if no calendar function was called then it is a general question and the answer will be printed
     else:
-        # append the message to the list
-        message_log.append({"role": "user", "content": message})
-        # connect to the api in order for the api to bring back a response
-        chat_completion = client.chat.completions.create(
-            messages=message_log,
-            model="gpt-3.5-turbo"
-        )
-        # the answer to the prompted question
-        reply = chat_completion.choices[0].message.content
-        # appends the message to the list so that the chatbot remembers the chat history
-        message_log.append({"role": "assistant", "content": reply})
-        # prints the response
         print("\n" + reply + "\n")
