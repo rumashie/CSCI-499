@@ -1,10 +1,19 @@
 from openai import OpenAI
 import constants
 from GoogleCalendar import create_calendar, delete_calendar, create_event, delete_event
-
+from Google import create_service
 
 # copy your openai secret key to api_key
 client = OpenAI(api_key = constants.APIKEY)
+
+#basic setup for using the Google Calendar API
+CLIENT_SECRET_FILE = 'client_secret.json'
+API_NAME = 'calendar'
+API_VERSION = 'v3'
+SCOPES = ['https://www.googleapis.com/auth/calendar']
+
+# Calls the create_service function from Google.py
+service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
 """
 this classifier allows the chat bot to determine if the user is asking a general question 
@@ -77,16 +86,16 @@ while message != "exit":
     info = reply.split(", ")
     # checks the first element of the list info to see if a calendar function was called 
     if info[0] == "Create calendar":
-        create_calendar(info[1])
+        create_calendar(info[1], service)
     elif info[0] == "Delete calendar":
-        delete_calendar(info[1])
+        delete_calendar(info[1], service)
     elif info[0] == "Create event":
         if len(info) == 5:
-            create_event(info[1], info[2], info[3], info[4])
+            create_event(info[1], info[2], info[3], info[4], service)
         else:
-            create_event(info[1], info[2], info[3], info[4], info[5])
+            create_event(info[1], info[2], info[3], info[4], service, info[5])
     elif info[0] == "Delete event":
-        delete_event(info[1], info[2])
+        delete_event(info[1], info[2], service)
     #if no calendar function was called then it is a general question and the answer will be printed
     else:
         print("\n" + reply + "\n")
