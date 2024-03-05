@@ -17,6 +17,7 @@ so we can added you as one of the test users on the Google console
 
 ## Running the code
 ### Chatbot
+- first install all of the requried librarys that are on requirements.txt (pip install -r requirements.txt)
 - In order to use the chatbot just run the Chatbot.py file
 - It will first prompt you to give access to your google calendar to complete authentication
 - After authentication you can type in the terminal your message and the chatbot will respond to 
