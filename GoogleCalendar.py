@@ -1,3 +1,8 @@
+"""
+Developed by: Leonardo Gonzalez Luzon
+"""
+
+
 from Google import create_service, convert_to_datetime
 
 """

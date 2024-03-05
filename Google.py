@@ -1,3 +1,8 @@
+"""
+Developed by: Leonardo Gonzalez Luzon
+"""
+
+
 import os
 from datetime import datetime
 from collections import namedtuple
