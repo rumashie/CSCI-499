@@ -31,3 +31,12 @@ the best of its ability
 ### Massiel
 
 ### Bergen
+-login.css Login Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online as I don't have access to it nor code base)
+-login.html
+-signup.html Sign Up Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online)
+-signup.css
+-task.html Task Manager to add via UI, (flask will be used tied with Leo's code to make it more efficent from frontend)
+-task.css
+-task.js - (Remind every hour, to take a break react.js more features will be addes shortly this week)
+-electron.js files will be scraped as group decided to change last minute. 
+
