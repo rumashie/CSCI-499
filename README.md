@@ -21,3 +21,13 @@ so we can added you as one of the test users on the Google console
 - It will first prompt you to give access to your google calendar to complete authentication
 - After authentication you can type in the terminal your message and the chatbot will respond to 
 the best of its ability
+
+## Contributions
+### Leonardo Gonzalez Luzon
+- Chatbot.py
+- GoogleCalendar.py
+- Google.py
+
+### Massiel
+
+### Bergen
