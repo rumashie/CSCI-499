@@ -15,6 +15,10 @@ access to your google calendar
 verification process", send one of us a message with the email that you are using for this application
 so we can added you as one of the test users on the Google console
 
+### Spotify API
+- Get the Client_ID and Client_Secret at https://developer.spotify.com/dashboard
+- Go to constants.py and change the corrisponding variables with your own
+
 ## Running the code
 ### Chatbot
 - first install all of the requried librarys that are on requirements.txt (pip install -r requirements.txt)
@@ -28,6 +32,7 @@ the best of its ability
 - Chatbot.py
 - GoogleCalendar.py
 - Google.py
+- Spotify.py
 
 ### Massiel
 - Database Model
