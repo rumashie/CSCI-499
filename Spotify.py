@@ -37,6 +37,6 @@ def play_song(token, song_name):
     spotify_url = artist['tracks']['items'][0]['external_urls']['spotify']
     # opens the song on the users browser
     webbrowser.open(spotify_url)
-    print("\n","song_name", "has been opened on your browser","\n")
+    print("\n",f"{song_name}", "has been opened on your browser","\n")
 
 
