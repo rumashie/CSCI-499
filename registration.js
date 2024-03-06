@@ -5,14 +5,10 @@ const appExpress = express();
 const portExpress = 3000;
 
 appExpress.use(express.static('public'));
-
-
-// Use express.urlencoded() to parse URL-encoded bodies (as sent by HTML forms)
 appExpress.use(express.urlencoded({ extended: true }));
-
-// Use express.json() to parse JSON bodies (if you're also handling JSON data)
 appExpress.use(express.json());
 
+//connect to db
 const pool = mysql.createPool({
   host: '127.0.0.1',
   user: 'root',
