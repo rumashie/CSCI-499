@@ -30,6 +30,9 @@ the best of its ability
 - Google.py
 
 ### Massiel
+- Database Model
+- Create Database Tables
+- Registration page linked with Database (User information is stored in Database)
 
 ### Bergen
 - login.css Login Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online as I don't have access to it nor code base)
