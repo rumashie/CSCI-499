@@ -8,6 +8,7 @@ from Google import create_service, convert_to_datetime
 """
 Creates a calendar on Google Calendar
     calendar_name: the requested name of the calendar
+    service: a service instance to utillize the Google API
 """
 def create_calendar(calendar_name, service):
     request_body = {
@@ -20,6 +21,7 @@ def create_calendar(calendar_name, service):
 """
 Deletes an existing calendar
     calendar_name: the name of the calendar that is to be deleted
+    service: a service instance to utillize the Google API
 """
 def delete_calendar(calendar_name, service):
     id = get_calendarID(calendar_name, service)
@@ -34,6 +36,7 @@ def delete_calendar(calendar_name, service):
 """
 Uses the name of the calendar to locate and return its associated ID
     calendar_name: the name of the calendar
+    service: a service instance to utillize the Google API
 """
 def get_calendarID(calendar_name, service):
     response = service.calendarList().list(
@@ -55,6 +58,7 @@ Creates an Event to an existing calendar users can add information like start, e
     event_name: name of the event
     start_time: the start date and time of the event
     end_time: the end date and time of the event
+    service: a service instance to utillize the Google API
     description: the optional description of the event
 """
 def create_event(calendar_name, event_name, start_time, end_time, service, description=''):
@@ -99,6 +103,7 @@ def create_event(calendar_name, event_name, start_time, end_time, service, descr
 Return the ID of the inputed event
     calendar_name: the name of the calendar the event is in
     event_name: the name of the event
+    service: a service instance to utillize the Google API
 """
 def get_event_ID(calendar_name, event_name, service):
     page_token = None
@@ -117,6 +122,7 @@ def get_event_ID(calendar_name, event_name, service):
 Deletes an event on an existing calendar
     calendar_name: the name of the calendar the event is in
     event_name: the name of the event that is to be deleted
+    service: a service instance to utillize the Google API
 """
 def delete_event(calendar_name, event_name, service):
     calendarID = get_calendarID(calendar_name, service)
