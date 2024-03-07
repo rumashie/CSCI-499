@@ -17,7 +17,11 @@ so we can added you as one of the test users on the Google console
 
 ### Spotify API
 - Get the Client_ID and Client_Secret at https://developer.spotify.com/dashboard
-- Go to constants.py and change the corrisponding variables with your own
+- Go to constants.py and change the corrisponding variables with your own and also get your Spotify username
+and paste it into the associated variable(you can find your username by going to Edit profile on your account page)
+- when create your first playlist the app will redirect you to a page where you have to allow access to
+create a playlist on you spotify account, in the terminal it will ask you to input the url, just copy and
+paste the url of the page you were redirected too and paste it in the terminal
 
 ## Running the code
 ### Chatbot
