@@ -40,7 +40,14 @@ the best of its ability
 - Registration page linked with Database (User information is stored in Database)
 
 ### Bergen
-- login.css Login Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online as I don't have access to it nor code base)
+
+### Running the code npm install -g create-react-app
+- npx create-react-app my-react-app
+- cd my-react-app
+- npm start
+
+
+- login.css Login Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online as I don't have access to it nor code base) Will be updated shortly.
 - login.html
 - signup.html Sign Up Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online)
 - signup.css
