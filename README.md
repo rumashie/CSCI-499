@@ -51,7 +51,7 @@ the best of its ability
 - cd my-react-app
 - npm start
 
--weather.py Added weather function to chatgpt.py. Must enter city name in order to get data. 
+- weather.py Added weather function to chatgpt.py. Must enter city name in order to get data. 
 - login.css Login Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online as I don't have access to it nor code base) Will be updated shortly.
 - login.html
 - signup.html Sign Up Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online)
