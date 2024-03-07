@@ -1,9 +1,11 @@
 import requests
+import constants
 
 def kelvin_to_fahrenheit(kelvin): 
     return (kelvin - 273.15) * 9/5 + 32
 
-def get_forecast(city_name, api_key):
+def get_forecast(city_name):
+    api_key = constants.WEATHER_APIKEY
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={api_key}"
     response = requests.get(url)
     data = response.json()

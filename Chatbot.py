@@ -8,6 +8,7 @@ import constants
 from GoogleCalendar import create_calendar, delete_calendar, create_event, delete_event
 from Google import create_service
 from Spotify import get_token, play_song, create_playlist
+from weather import get_forecast
 
 # copy your openai secret key to api_key
 client = OpenAI(api_key = constants.APIKEY)
@@ -31,10 +32,11 @@ The possible types of questions are:
 - A general question, that can be answered by the chatbot
 - A request to do something with their calendar
 - A request for a song that can be played on Spotify
+- A request for the weather or forecast
 If you think the question is a general question that can be answered over the internet, then answer their question. 
 If you think the question is a request to do something to their calendar, then give me a phase that corrisponds to the action they want to do. 
 Then give me the attributes needed to perform each task from the user input. 
-The attributes I need for each task goes as folowed:
+The attributes I need for each task goes as followed:
 Create calendar: calendar_name
 Delete calendar: calendar_name
 Create event: calendar_name, event_name, start_time, end_time, and an optional description (NOTE: start_time and end_time must contain a date and be in this format 2/25/2024 7:00am)
@@ -72,9 +74,9 @@ Response: Delete event, lunch with friends, test calendar
 
 If you think the question is a request to do something that has to do with music or something that can be accomplished with the SpotifyAPI, then give me a phrase
 that corrisponds to the action they want to do. Then give me the attributes needed to perform each task from the user input. 
-The attributes I need for each task goes as folowed:
-Play song: song_name
-Create playlist: artist_name, playlist_name(optional)
+The attributes I need for each task goes as followed:
+Play song: play song, song_name
+Create playlist: create playlist, artist_name, playlist_name(optional)
 IF ANY ATTRIBUTE IS MISSING PLEASE ASK THE USER FOR THE MISSING ATTRIBUTE!
 Question: Can you play Fast Car
 Response: Play song, Fast Car
@@ -84,6 +86,17 @@ Response: Create playlist, Taylor Swift
 
 Question: Can you make a playlist for Skillet called my playlist
 Response: Create playlist, skillet, my playlist
+
+If you think the question is a request to do something with the weather then give me a phrase that corrisponds to the action they want to do. Then give me the
+attributes needed to perform each task from the user input
+The attributes I need for each task goes as followed:
+Get forcast: get forcast, city_name
+
+Question: What's the weather today in New York?
+Response: get forcast, New York
+
+Question: What's the weather today in Staten Island?
+Response: get forcast, Staten Island
 """
 # api will recieve these messages to make a response
 message_log = [{'role' : "system", "content" : classifier}]
@@ -117,13 +130,15 @@ while message != "exit":
             create_event(info[1], info[2], info[3], info[4], service, info[5])
     elif info[0] == "Delete event":
         delete_event(info[1], info[2], service)
-    elif info[0] == "Play song":
+    elif info[0] == "play song":
         play_song(get_token(), info[1])
-    elif info[0] == "Create playlist":
+    elif info[0] == "create playlist":
         if len(info) == 3:
             create_playlist(info[1], info[2])
         else:
             create_playlist(info[1])
+    elif info[0] == "get forcast":
+        get_forecast(info[1])
     #if no calendar function was called then it is a general question and the answer will be printed
     else:
         print("\n" + reply + "\n")

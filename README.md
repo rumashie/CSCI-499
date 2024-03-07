@@ -23,6 +23,9 @@ and paste it into the associated variable(you can find your username by going to
 create a playlist on you spotify account, in the terminal it will ask you to input the url, just copy and
 paste the url of the page you were redirected too and paste it in the terminal
 
+### Weather API
+- 
+
 ## Running the code
 ### Chatbot
 - first install all of the requried librarys that are on requirements.txt (pip install -r requirements.txt)
@@ -51,7 +54,7 @@ the best of its ability
 - cd my-react-app
 - npm start
 
-- weather.py Added weather function to chatgpt.py. Must enter city name in order to get data. 
+- weather.py Added weather function to Chatbot.py. Must enter city name in order to get data. 
 - login.css Login Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online as I don't have access to it nor code base) Will be updated shortly.
 - login.html
 - signup.html Sign Up Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online)
