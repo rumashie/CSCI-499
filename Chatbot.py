@@ -90,13 +90,13 @@ Response: Create playlist, skillet, my playlist
 If you think the question is a request to do something with the weather then give me a phrase that corrisponds to the action they want to do. Then give me the
 attributes needed to perform each task from the user input
 The attributes I need for each task goes as followed:
-Get forcast: get forcast, city_name
+Get forecast: get forcast, city_name
 
 Question: What's the weather today in New York?
-Response: get forcast, New York
+Response: get forecast, New York
 
 Question: What's the weather today in Staten Island?
-Response: get forcast, Staten Island
+Response: get forecast, Staten Island
 """
 # api will recieve these messages to make a response
 message_log = [{'role' : "system", "content" : classifier}]
@@ -137,7 +137,7 @@ while message != "exit":
             create_playlist(info[1], info[2])
         else:
             create_playlist(info[1])
-    elif info[0] == "get forcast":
+    elif info[0] == "get forecast":
         get_forecast(info[1])
     #if no calendar function was called then it is a general question and the answer will be printed
     else:
