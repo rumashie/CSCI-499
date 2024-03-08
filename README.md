@@ -24,7 +24,7 @@ create a playlist on you spotify account, in the terminal it will ask you to inp
 paste the url of the page you were redirected too and paste it in the terminal
 
 ### Weather API
-- Make sure to have your API key. You can use ours for the time being. "9b0b89e0ab1726fdc6a4186660bad45b"
+- Make sure to have your API key https://openweathermap.org/api. You can use ours for the time being listed in constants.py.
 - Make sure you are running Chatbot then you can ask anything related to the weather. In order to get the weather you must prompt full city in order for it to work.
 - For instance "What is the weather in New York" it will return 3 hour forecast for the next 5 days. NY is not a valid for API, and it will be prompted full city name New York, Paris, etc.
 
