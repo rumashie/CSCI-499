@@ -90,7 +90,7 @@ Response: Create playlist, skillet, my playlist
 If you think the question is a request to do something with the weather then give me a phrase that corresponds to the action they want to do. Then give me the
 attributes needed to perform each task from the user input
 The attributes I need for each task goes as followed:
-Get forecast: get forcast, city_name
+Get forecast: get forecast, city_name
 
 Question: What's the weather today in New York?
 Response: get forecast, New York
