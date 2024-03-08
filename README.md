@@ -24,7 +24,9 @@ create a playlist on you spotify account, in the terminal it will ask you to inp
 paste the url of the page you were redirected too and paste it in the terminal
 
 ### Weather API
-- 
+- Make sure to have your API key. You can use ours for the time being. "9b0b89e0ab1726fdc6a4186660bad45b"
+- Make sure you are running Chatbot then you can ask anything related to the weather. In order to get the weather you must prompt full city in order for it to work.
+- For instance "What is the weather in New York" it will return 3 hour forecast for the next 5 days. NY is not a valid for API, and it will be prompted full city name New York, Paris, etc.
 
 ## Running the code
 ### Chatbot
@@ -48,18 +50,12 @@ the best of its ability
 
 ### Bergen
 
-### Running the code 
-- npm install -g create-react-app
-- npx create-react-app my-react-app
-- cd my-react-app
-- npm start
-
 - weather.py Added weather function to Chatbot.py. Must enter city name in order to get data. 
 - login.css Login Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online as I don't have access to it nor code base) Will be updated shortly.
 - login.html
 - signup.html Sign Up Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online)
 - signup.css
-- task.html Task Manager to add via UI, (flask will be used tied with Leo's code to make it more efficent from frontend)
+- task.html Task Manager to add via UI, (flask will be used tied with Leo's/ my code to make it more efficent from frontend)
 - task.css
 - task.js - (Remind every hour, to take a break react.js more features will be addes shortly this week)
 
