@@ -87,7 +87,7 @@ Response: Create playlist, Taylor Swift
 Question: Can you make a playlist for Skillet called my playlist
 Response: Create playlist, skillet, my playlist
 
-If you think the question is a request to do something with the weather then give me a phrase that corrisponds to the action they want to do. Then give me the
+If you think the question is a request to do something with the weather then give me a phrase that corresponds to the action they want to do. Then give me the
 attributes needed to perform each task from the user input
 The attributes I need for each task goes as followed:
 Get forecast: get forcast, city_name
