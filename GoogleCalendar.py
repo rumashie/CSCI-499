@@ -3,8 +3,8 @@ Developed by: Leonardo Gonzalez Luzon
 """
 
 
-from Google import create_service, convert_to_datetime
-
+from Google import convert_to_datetime
+from speech_to_text import text_to_speech, speech_to_text
 """
 Creates a calendar on Google Calendar
     calendar_name: the requested name of the calendar
@@ -15,8 +15,8 @@ def create_calendar(calendar_name, service):
         'summary' : calendar_name
     }
     service.calendars().insert(body=request_body).execute()
-    print("\n")
-    print("Calendar called", calendar_name, "has been created.", "\n")
+    str = "\n" + "Calendar called " + calendar_name + " has been created." + "\n"
+    return str
 
 """
 Deletes an existing calendar
@@ -27,11 +27,10 @@ def delete_calendar(calendar_name, service):
     id = get_calendarID(calendar_name, service)
     if id:
         service.calendars().delete(calendarId=id).execute()
-        print("\n")
-        print("Calendar called", calendar_name, "was deleted.", "\n")
+        str = "\n" + "Calendar called " + calendar_name + " was deleted." + "\n"
     else:
-        print("\n")
-        print("Calendar doesn't exist", "\n")
+        str = "\n" + "Calendar doesn't exist" + "\n"
+    return str
 
 """
 Uses the name of the calendar to locate and return its associated ID
@@ -93,11 +92,10 @@ def create_event(calendar_name, event_name, start_time, end_time, service, descr
             supportsAttachments=supportsAttachments,
             body=event_request_body
         ).execute()
-        print("\n")
-        print("Created Event", event_name, "on", calendar_name, "from", start_time, "to", end_time, "\n")
+        str = "\n" + "Created Event " + event_name + " on " + calendar_name + " from " + start_time + " to " + end_time + "\n"
     else:
-        print("\n")
-        print("Calendar doesn't exist", "\n")
+        str = "\n" + "Calendar doesn't exist" + "\n"
+    return str
 
 """
 Return the ID of the inputed event
@@ -132,8 +130,7 @@ def delete_event(calendar_name, event_name, service):
             calendarId=calendarID,
             eventId=eventID
         ).execute()
-        print("\n")
-        print("The event called", event_name, "was deleted.", "\n")
+        str = "\n" + "The event called " + event_name + " was deleted" + "\n"
     else:
-        print("\n")
-        print("Either calendar or event doesn't exist", "\n")
+        str = "\n" + "Either calendar or event doesn't exist" + "\n"
+    return str
