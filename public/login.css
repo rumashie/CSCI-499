@@ -5,24 +5,29 @@ body {
     justify-content: center;
     height: 100vh;
     background-color:#191919;
-    
-    
   }
 
 
-#login button {
+#login-buttons{
+    display: flex;
+    justify-content: center;
+}
+
+
+#login button, #create-account button {
 
     background: none;
     color: #b3f2f2;
     border: 2px solid;
-    padding: 1em 2em;
-    font-size: 1em;
+    padding: .5em 1em;
+    font-size: .8em;
     transition: all 500ms;
     border-radius: 2em;
-
+    margin-right: 20px;
 }
 
-#login button:hover {
+
+#login button:hover, #create-account button:hover {
     border-color: rgb(131, 237, 237);
     color: white;
     box-shadow: 0 0.5em 0.5em -0.4em aquamarine;
@@ -51,8 +56,6 @@ body {
     border-color:rgb(165, 222, 229);
     border-radius: 2em;
    
-    
-
     
 }
 

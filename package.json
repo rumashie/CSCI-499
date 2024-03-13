@@ -4,9 +4,11 @@
   "description": "499project",
   "main": "main.js",
   "dependencies": {
-    "electron": "^28.2.3"
+    "electron": "^28.2.4",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.2"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "electron ."
   },

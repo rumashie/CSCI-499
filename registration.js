@@ -32,7 +32,7 @@ appExpress.get('/', (req, res) => {
 });
 
 appExpress.post('/register', (req, res) => {
-  const { username, email, password } = req.body;
+  const { firstName, lastName, username, email, password } = req.body;
 
   pool.getConnection((err, connection) => {
     if (err) {
@@ -40,17 +40,54 @@ appExpress.post('/register', (req, res) => {
       return res.status(500).json({ error: 'Internal server error' });
     }
 
-    const sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
-    connection.query(sql, [username, email, password], (error, results) => {
-      connection.release();
-      if (error) {
-        console.error('Error registering user:', error);
+    // Check if email or username already exists
+    connection.query('SELECT COUNT(*) AS emailCount FROM users WHERE email = ?', [email], (err, results) => {
+      if (err) {
+        connection.release();
+        console.error('Error checking email:', err);
         return res.status(500).json({ error: 'Internal server error' });
       }
-      res.status(201).json({ message: 'User Created successfully' });
+      const emailCount = results[0].emailCount;
+
+      
+      if (emailCount > 0) {
+        connection.release();
+        return res.redirect('/signup.html?error=' + encodeURIComponent('Email already registered. Try Again'));
+      }
+      
+
+      // Check for unique username
+      connection.query('SELECT COUNT(*) AS usernameCount FROM users WHERE username = ?', [username], (err, results) => {
+        if (err) {
+          connection.release();
+          console.error('Error checking username:', err);
+          return res.status(500).json({ error: 'Internal server error' });
+        }
+        const usernameCount = results[0].usernameCount;
+
+        // Check if username already exists
+        if (usernameCount > 0) {
+          connection.release();
+          return res.redirect('/signup.html?error=' + encodeURIComponent('Username already exists. Try Again'));
+
+        }
+        
+        // Insert user into the database
+        const sql = 'INSERT INTO users (firstName, lastName, username, email, password) VALUES (?, ?, ?, ?, ?)';
+        connection.query(sql, [firstName, lastName, username, email, password], (error, results) => {
+          connection.release();
+          if (error) {
+            console.error('Error registering user:', error);
+            return res.status(500).json({ error: 'Internal server error' });
+          }
+          // Redirect to login page
+          res.redirect('/login.html');
+        });
+      });
     });
   });
 });
+
 
 // Start the Express server
 const server = appExpress.listen(portExpress, () => {
