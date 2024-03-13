@@ -48,6 +48,8 @@ the best of its ability
 - Database Model
 - Create Database Tables
 - Registration page linked with Database (User information is stored in Database)
+- Linked login.html and signup.html
+- Added Error Handling to user login and signup
 
 ### Bergen
 
