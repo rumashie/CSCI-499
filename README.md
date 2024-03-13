@@ -42,6 +42,7 @@ the best of its ability
 - GoogleCalendar.py
 - Google.py
 - Spotify.py
+- speech_to_text.py
 
 ### Massiel
 - Database Model

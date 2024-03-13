@@ -2,6 +2,7 @@
 Developed by: Leonardo Gonzalez Luzon
 """
 
+
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy.util as util
@@ -9,6 +10,7 @@ import requests
 import constants
 import webbrowser
 import pprint
+
 
 """
 Gets an access token that will be used to access the functions of the Spotify API
@@ -41,7 +43,8 @@ def play_song(token, song_name):
     spotify_url = artist['tracks']['items'][0]['external_urls']['spotify']
     # opens the song on the users browser
     webbrowser.open(spotify_url)
-    print("\n",f"{song_name}", "has been opened on your browser","\n")
+    str = "\n" + f"{song_name}" + " has been opened on your browser" + "\n"
+    return str
 
 """
 Takes a artist name and requests their artist_id
@@ -123,5 +126,6 @@ def create_playlist(artist, playlist_name="Playlist"):
     for i in range(len(songs)):
         track_uris.append(songs[i]['uri'])
     sp.playlist_add_items(playlist_id, track_uris)
-    print('\n', f"Playlist '{playlist_name}' created successfully with {len(songs)} songs.", '\n')
+    str = '\n' + f"Playlist '{playlist_name}' created successfully with {len(songs)} songs." + '\n'
     webbrowser.open(playlist_url)
+    return str

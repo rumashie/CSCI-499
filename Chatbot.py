@@ -9,6 +9,8 @@ from GoogleCalendar import create_calendar, delete_calendar, create_event, delet
 from Google import create_service
 from Spotify import get_token, play_song, create_playlist
 from weather import get_forecast
+from speech_to_text import speech_to_text, text_to_speech
+
 
 # copy your openai secret key to api_key
 client = OpenAI(api_key = constants.APIKEY)
@@ -98,14 +100,23 @@ Response: get forecast, New York
 Question: What's the weather today in Staten Island?
 Response: get forecast, Staten Island
 """
+
 # api will recieve these messages to make a response
 message_log = [{'role' : "system", "content" : classifier}]
 message = ""
 # will allow users to keep asking multiple messages
 while message != "exit":
     # take an input so the user can ask a question
-    message = input()
+    
+    
+    # COMMENT OUT THE ONE YOUR NOT GOING TO USE THIS IS FOR TESTING
+    message = speech_to_text()
+    # message = input()
+    
+    
+    
     # append the message to the list
+    print(message)
     message_log.append({"role": "user", "content": message})
     # connect to the api in order for the api to bring back a response
     chat_completion = client.chat.completions.create(
@@ -118,27 +129,48 @@ while message != "exit":
     message_log.append({"role": "assistant", "content": reply})
     # splits the infromation for a calendar related function
     info = reply.split(", ")
+
     # checks the first element of the list info to see if a calendar function was called 
     if info[0] == "Create calendar":
-        create_calendar(info[1], service)
+        text = create_calendar(info[1], service)
+        print(text)
+        text_to_speech(text)
+    
     elif info[0] == "Delete calendar":
-        delete_calendar(info[1], service)
+        text = delete_calendar(info[1], service)
+        print(text)
+        text_to_speech(text)
+    
     elif info[0] == "Create event":
         if len(info) == 5:
-            create_event(info[1], info[2], info[3], info[4], service)
+            text = create_event(info[1], info[2], info[3], info[4], service)
         else:
-            create_event(info[1], info[2], info[3], info[4], service, info[5])
+            text = create_event(info[1], info[2], info[3], info[4], service, info[5])
+        print(text)
+        text_to_speech(text)
+    
     elif info[0] == "Delete event":
-        delete_event(info[1], info[2], service)
-    elif info[0] == "play song":
-        play_song(get_token(), info[1])
-    elif info[0] == "create playlist":
+        text = delete_event(info[1], info[2], service)
+        print(text)
+        text_to_speech(text)
+    
+    elif info[0] == "Play song":
+        text = play_song(get_token(), info[1])
+        print(text)
+        text_to_speech(text)
+    
+    elif info[0] == "Create playlist":
         if len(info) == 3:
-            create_playlist(info[1], info[2])
+            text = create_playlist(info[1], info[2])
         else:
-            create_playlist(info[1])
+            text = create_playlist(info[1])
+        print(text)
+        text_to_speech(text)
+    
     elif info[0] == "get forecast":
         get_forecast(info[1])
+    
     #if no calendar function was called then it is a general question and the answer will be printed
     else:
         print("\n" + reply + "\n")
+        text_to_speech(reply)
