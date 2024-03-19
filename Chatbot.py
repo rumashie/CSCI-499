@@ -14,13 +14,11 @@ from speech_to_text import speech_to_text, text_to_speech
 
 # copy your openai secret key to api_key
 client = OpenAI(api_key = constants.APIKEY)
-
 #basic setup for using the Google Calendar API
 CLIENT_SECRET_FILE = 'client_secret.json'
 API_NAME = 'calendar'
 API_VERSION = 'v3'
 SCOPES = ['https://www.googleapis.com/auth/calendar']
-
 # Calls the create_service function from Google.py
 service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
@@ -110,13 +108,13 @@ while message != "exit":
     
     
     # COMMENT OUT THE ONE YOUR NOT GOING TO USE THIS IS FOR TESTING
-    message = speech_to_text()
-    # message = input()
+    #message = speech_to_text()
+    message = input()
     
     
     
     # append the message to the list
-    print(message)
+    #print(message)
     message_log.append({"role": "user", "content": message})
     # connect to the api in order for the api to bring back a response
     chat_completion = client.chat.completions.create(
