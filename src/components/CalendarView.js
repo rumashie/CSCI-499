@@ -8,12 +8,11 @@ const CalendarView = () => {
     { id: 3, date: '07/12', title: 'Text Massiel for the hw', time: '12:00-12:25 PM' },
     { id: 4, date: '08/12', title: 'Facetime my boy Ruski', time: '4:00-5:00 PM' },
     { id: 5, date: '09/12', title: 'Business Meeting @ 6', time: '4:00-4:30 PM' },
-     {/* need to adjust this so user can add instead of hard coding with google calender */}
   ];
 
   return (
     <div className="calendar-view">
-      <h2>December 2021</h2>
+      <h2>March 2024</h2>
       <div className="calendar-grid">
         {/* need to add google calender here my boy leo add this */}
       </div>
@@ -27,7 +26,7 @@ const CalendarView = () => {
           </div>
         ))}
       </div>
-      <button>View entire schedule</button>
+      <button className="view-schedule-button">View entire schedule</button>
     </div>
   );
 };
