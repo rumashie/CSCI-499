@@ -13,12 +13,10 @@ def speech_to_text():
     while(1):
         # Initialize recognizer
         r = sr.Recognizer()
-
         # Use the default microphone as the audio source
         with sr.Microphone() as source:
             # Listen for the first phrase and extract the audio data
             audio = r.listen(source)
-
         try:
             # Use Google Web Speech API to transcribe the audio
             return r.recognize_google(audio)
