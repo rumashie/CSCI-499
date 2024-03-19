@@ -5,7 +5,7 @@ const Tasklist = () => {
   const [tasks, setTasks] = useState([
     { id: 1, title: 'Presentations are due today' },
     { id: 2, title: 'Meeting @ 1:00 PM' },
-    { id: 3, title: 'Catch Zeus in Gold' },
+    { id: 3, title: 'Catch Zeus in HeartGold' },
   ]);
 
   const addTask = () => {
@@ -52,10 +52,13 @@ const Tasklist = () => {
           </div>
         ))}
       </div>
-      <input id="task-input" type="text" placeholder="Enter new task" />
-      <button onClick={addTask}>Add Task</button>
+      <div className="task-input-container">
+        <input id="task-input" type="text" placeholder="Enter new task" />
+        <button className="add-task-button" onClick={addTask}>+</button>
+      </div>
     </div>
   );
 };
 
 export default Tasklist;
+
