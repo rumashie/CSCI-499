@@ -28,7 +28,6 @@ body {
     margin-right: 20px;
 }
 
-
 #login button:hover {
     border-color: rgb(131, 237, 237);
     color: white;
@@ -46,7 +45,6 @@ body {
     border-color: rgb(165, 222, 229);
     color: white;
     border-radius: 2em;
-
 }
 
 #password input[type="password"]{
