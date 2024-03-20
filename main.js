@@ -1,39 +1,14 @@
-const { app, BrowserWindow } = require('electron');
+const express = require('express');
 const path = require('path');
-const url = require('url');
 
-let mainWindow;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true
-    }
-  });
+app.use(express.static(path.join(__dirname, 'public')));
 
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'login.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
 
-  mainWindow.on('closed', function () {
-    mainWindow = null;
-  });
-}
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 
-app.on('ready', createWindow);
-
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-app.on('activate', function () {
-  if (mainWindow === null) {
-    createWindow();
-  }
 });

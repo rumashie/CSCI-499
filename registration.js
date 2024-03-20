@@ -3,12 +3,12 @@ const mysql = require('mysql');
 const bcrypt = require('bcrypt');  //Hash
  
 
-const appExpress = express();
+const app = express();
 const portExpress = 3000;
 
-appExpress.use(express.static('public'));
-appExpress.use(express.urlencoded({ extended: true }));
-appExpress.use(express.json());
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 //connect to db
 const pool = mysql.createPool({
@@ -30,11 +30,11 @@ pool.getConnection((err, connection) => {
 });
 
 // Define route handler for root URL
-appExpress.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Registration page.');
 });
 
-appExpress.post('/register', (req, res) => {
+app.post('/register', (req, res) => {
   const { firstName, lastName, username, email, password } = req.body;
 
 //Hash Password
@@ -102,6 +102,6 @@ appExpress.post('/register', (req, res) => {
 
 
 // Start the Express server
-const server = appExpress.listen(portExpress, () => {
+const server = app.listen(portExpress, () => {
   console.log(`Express server is running on http://localhost:${portExpress}`);
 });
