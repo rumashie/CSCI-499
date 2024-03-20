@@ -22,7 +22,7 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 # Calls the create_service function from Google.py
 service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
-def handle_message(user_input):
+def init_messages(message_log):
     """
     this classifier allows the chat bot to determine if the user is asking a general question 
     to which it will respond with an answer or if the user is trying to something to their calendar
@@ -99,7 +99,17 @@ def handle_message(user_input):
     Question: What's the weather today in Staten Island?
     Response: get forecast, Staten Island
     """
-    message_log = [{'role' : "system", "content" : classifier}]
+    classifier_message = {
+        "role": "system",
+        "content": """Your classifier description here..."""
+    }
+    # Check if the message_log is empty or the first message is not the classifier
+    if not message_log or message_log[0] != classifier_message:
+        message_log.insert(0, classifier_message)
+
+    return message_log
+
+def handle_message(user_input, message_log):
     # Append the user message to the message log
     message_log.append({"role": "user", "content": user_input})
     # Process the message through the OpenAI API
