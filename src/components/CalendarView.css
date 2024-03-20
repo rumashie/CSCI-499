@@ -51,3 +51,10 @@
 .view-schedule-button:hover {
   background-color: #333;
 }
+
+.clear-history-button {
+  margin-left: auto; /* Aligns the button to the right of the chatbox header */
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
