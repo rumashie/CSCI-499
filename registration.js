@@ -1,41 +1,12 @@
-const express = require('express');
-const mysql = require('mysql');
-const bcrypt = require('bcrypt');  //Hash
- 
+module.exports = function(app, pool, bcrypt){
+  
+  // Define route handler for root URL
+  app.get('/', (req, res) => {
+    res.send('Registration page.');
+  });
 
-const app = express();
-const portExpress = 3000;
-
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-//connect to db
-const pool = mysql.createPool({
-  host: 'capstone.cdoge0oyalpz.us-east-1.rds.amazonaws.com',
-  port: '3306',
-  user: 'admin',
-  password: 'hunterhawk499',
-  database: 'capstone'
-});
-
-// Check database connection
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Error connecting to database:', err);
-  } else {
-    console.log('Connected to database successfully!');
-    connection.release();
-  }
-});
-
-// Define route handler for root URL
-app.get('/', (req, res) => {
-  res.send('Registration page.');
-});
-
-app.post('/register', (req, res) => {
-  const { firstName, lastName, username, email, password } = req.body;
+  app.post('/register', (req, res) => {
+   const { firstName, lastName, username, email, password } = req.body;
 
 //Hash Password
   bcrypt.hash(password, 10, (err, hashedPassword) => {
@@ -101,7 +72,4 @@ app.post('/register', (req, res) => {
 });
 
 
-// Start the Express server
-const server = app.listen(portExpress, () => {
-  console.log(`Express server is running on http://localhost:${portExpress}`);
-});
+};
