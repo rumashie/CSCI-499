@@ -1,0 +1,77 @@
+.widget-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.widget {
+  background-color: #2e2c2c;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.productivity-rate span {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+/* ai widget only, take look at note and change what is deemed fit */
+.ai-bot-container .container {
+  width: 300px;
+}
+
+.ai-bot-container .chatbox-header {
+  background-color: #2d86e0;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  text-align: center;
+}
+
+.ai-bot-container .chatbox-body {
+  background-color: #27272a;
+  padding: 10px;
+  border-radius: 0 0 5px 5px;
+  height: 300px;
+  overflow-y: auto;
+}
+
+.ai-bot-container .message-bubble {
+  background-color: #181824;
+  color: #f5f5f7;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  max-width: 80%;
+}
+
+.ai-bot-container .bot-message {
+  background-color: #323233;
+  align-self: flex-start;
+}
+
+.ai-bot-container .input-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.ai-bot-container .input-field {
+  background-color: #38393b;
+  color: #f5f5f7;
+  border: none;
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+  flex: 1;
+}
+
+.ai-bot-container .send-button {
+  background-color: #2d86e0;
+  color: #f5f6f7;
+  border: none;
+  padding: 10px;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
