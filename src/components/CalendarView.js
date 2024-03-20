@@ -1,21 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './CalendarView.css';
 
 const CalendarView = () => {
-  const events = [
-    { id: 1, date: '05/12', title: 'Workshop', time: '2:00-2:45 PM' },
-    { id: 2, date: '06/12', title: 'Text Leo to push this', time: '11:00 AM-2:45' },
-    { id: 3, date: '07/12', title: 'Text Massiel for the hw', time: '12:00-12:25 PM' },
-    { id: 4, date: '08/12', title: 'Facetime my boy Ruski', time: '4:00-5:00 PM' },
-    { id: 5, date: '09/12', title: 'Business Meeting @ 6', time: '4:00-4:30 PM' },
-  ];
+  const [calendars, setCalendars] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [selectedCalendar, setSelectedCalendar] = useState('');
+
+  const fetchCalendars = useCallback(() => {
+    fetch('http://localhost:5000/calendars')
+      .then((response) => response.json())
+      .then(setCalendars)
+      .catch((error) => console.error('Error fetching calendars:', error));
+  }, []);
+
+  const fetchEvents = useCallback(() => {
+    if (selectedCalendar) {
+      fetch('http://localhost:5000/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ calendarId: selectedCalendar }),
+      })
+        .then((response) => response.json())
+        .then(setEvents)
+        .catch((error) => console.error('Error fetching events:', error));
+    }
+  }, [selectedCalendar]);
+
+  useEffect(() => {
+    fetchCalendars();
+  }, [fetchCalendars]);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
+
+  const handleRefresh = () => {
+    fetchCalendars();
+    fetchEvents();
+  };
 
   return (
     <div className="calendar-view">
       <h2>March 2024</h2>
-      <div className="calendar-grid">
-        {/* need to add google calender here my boy leo add this */}
-      </div>
+      <select
+        value={selectedCalendar}
+        onChange={(e) => setSelectedCalendar(e.target.value)}
+      >
+        <option value="">Select a Calendar</option>
+        {calendars.map((calendar) => (
+          <option key={calendar.id} value={calendar.id}>
+            {calendar.summary}
+          </option>
+        ))}
+      </select>
+      <button onClick={handleRefresh} className="refresh-button">Refresh</button>
       <div className="upcoming-events">
         <h3>Upcoming events on your calendar</h3>
         {events.map((event) => (

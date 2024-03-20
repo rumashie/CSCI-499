@@ -5,6 +5,8 @@ Developed by: Leonardo Gonzalez Luzon
 
 from Google import convert_to_datetime
 from speech_to_text import text_to_speech, speech_to_text
+from datetime import datetime
+import pytz
 """
 Creates a calendar on Google Calendar
     calendar_name: the requested name of the calendar
@@ -134,3 +136,48 @@ def delete_event(calendar_name, event_name, service):
     else:
         str = "\n" + "Either calendar or event doesn't exist" + "\n"
     return str
+
+def list_calendars(service):
+    calendars = service.calendarList().list().execute()
+    calendar_names = [{'id': cal['id'], 'summary': cal['summary']} for cal in calendars['items']]
+    return calendar_names
+
+def fetch_events(calendar_id, service, max_results=5):
+    # Set the timeMin to the current time in UTC
+    now = datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
+
+    try:
+        # Fetch events from the calendar
+        events_result = service.events().list(
+            calendarId=calendar_id,
+            timeMin=now,
+            maxResults=max_results,
+            singleEvents=True,
+            orderBy='startTime'
+        ).execute()
+        events = events_result.get('items', [])
+
+        # Convert events to Eastern Time (America/New_York) for display
+        eastern = pytz.timezone('America/New_York')
+        formatted_events = []
+        for event in events:
+            start = event['start'].get('dateTime', event['start'].get('date'))
+            end = event['end'].get('dateTime', event['end'].get('date'))
+
+            # Convert start and end times from UTC to Eastern Time
+            start_dt = datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z").astimezone(eastern)
+            end_dt = datetime.strptime(end, "%Y-%m-%dT%H:%M:%S%z").astimezone(eastern)
+
+            formatted_events.append({
+                'id': event['id'],
+                'title': event.get('summary', 'No Title'),
+                'start': start_dt.strftime("%Y-%m-%dT%H:%M:%S%z"),  # Convert back to ISO format for consistency
+                'end': end_dt.strftime("%Y-%m-%dT%H:%M:%S%z"),      # Convert back to ISO format for consistency
+                'date': start_dt.strftime("%m/%d"),
+                'time': f"{start_dt.strftime('%I:%M %p')} - {end_dt.strftime('%I:%M %p')}"
+            })
+
+        return formatted_events
+    except Exception as e:
+        print(f"Failed to fetch events: {e}")
+        return []

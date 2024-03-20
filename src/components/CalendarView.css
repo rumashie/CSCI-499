@@ -52,9 +52,16 @@
   background-color: #333;
 }
 
-.clear-history-button {
-  margin-left: auto; /* Aligns the button to the right of the chatbox header */
+.refresh-button {
+  margin-top: 10px;
   padding: 5px 10px;
-  font-size: 0.8rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+}
+
+.refresh-button:hover {
+  background-color: #0056b3;
 }
