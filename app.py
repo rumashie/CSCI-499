@@ -10,10 +10,8 @@ def chat():
     data = request.get_json()
     user_message = data.get('message')
     conversation = data.get('conversation', [])
-    
-    # Initialize or update the conversation with the classifier message if necessary
     conversation = init_messages(conversation)
-
+    print(conversation)
     response = handle_message(user_message, conversation)
     return jsonify(response)
 

@@ -101,7 +101,7 @@ def init_messages(message_log):
     """
     classifier_message = {
         "role": "system",
-        "content": """Your classifier description here..."""
+        "content": classifier
     }
     # Check if the message_log is empty or the first message is not the classifier
     if not message_log or message_log[0] != classifier_message:
