@@ -1,5 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');  //Hash
+ 
 
 const appExpress = express();
 const portExpress = 3000;
@@ -10,9 +12,10 @@ appExpress.use(express.json());
 
 //connect to db
 const pool = mysql.createPool({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '1325massi',
+  host: 'capstone.cdoge0oyalpz.us-east-1.rds.amazonaws.com',
+  port: '3306',
+  user: 'admin',
+  password: 'hunterhawk499',
   database: 'capstone'
 });
 
@@ -33,6 +36,14 @@ appExpress.get('/', (req, res) => {
 
 appExpress.post('/register', (req, res) => {
   const { firstName, lastName, username, email, password } = req.body;
+
+//Hash Password
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) {
+      console.error('Error hashing password:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+
 
   pool.getConnection((err, connection) => {
     if (err) {
@@ -74,7 +85,7 @@ appExpress.post('/register', (req, res) => {
         
         // Insert user into the database
         const sql = 'INSERT INTO users (firstName, lastName, username, email, password) VALUES (?, ?, ?, ?, ?)';
-        connection.query(sql, [firstName, lastName, username, email, password], (error, results) => {
+        connection.query(sql, [firstName, lastName, username, email, hashedPassword], (error, results) => {
           connection.release();
           if (error) {
             console.error('Error registering user:', error);
@@ -86,6 +97,7 @@ appExpress.post('/register', (req, res) => {
       });
     });
   });
+});
 });
 
 
