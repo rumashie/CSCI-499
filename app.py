@@ -11,7 +11,6 @@ def chat():
     user_message = data.get('message')
     conversation = data.get('conversation', [])
     conversation = init_messages(conversation)
-    print(conversation)
     response = handle_message(user_message, conversation)
     return jsonify(response)
 
