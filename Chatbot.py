@@ -22,6 +22,10 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 # Calls the create_service function from Google.py
 service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
+
+"""
+sets up the chatbot for instances where users want to do some type of action
+"""
 def init_messages(message_log):
     """
     this classifier allows the chat bot to determine if the user is asking a general question 
@@ -109,6 +113,11 @@ def init_messages(message_log):
 
     return message_log
 
+"""
+using the message from the user input and with context from the message log it 
+sends the response to the proccess_response function to determine if any action 
+is required if not then it will return a response
+"""
 def handle_message(user_input, message_log):
     # Append the user message to the message log
     message_log.append({"role": "user", "content": user_input})
@@ -125,6 +134,11 @@ def handle_message(user_input, message_log):
     # Return a dictionary containing the chatbot's response and any action taken
     return {"response": response_text}
 
+"""
+takes the chatbot response and checks if the question is to take a certain action 
+that requires the use of a calendar or Spotify function, if it does it will call 
+the function and respond with if the action was sucessful or if it was not
+"""
 def process_response(reply):
     info = reply.split(", ")
     # Based on the action, call the appropriate function and generate a response
