@@ -118,7 +118,7 @@ using the message from the user input and with context from the message log it
 sends the response to the proccess_response function to determine if any action 
 is required if not then it will return a response
 """
-def handle_message(user_input, message_log):
+def handle_message(user_input, message_log, tts_enabled=False):
     # Append the user message to the message log
     message_log.append({"role": "user", "content": user_input})
     # Process the message through the OpenAI API

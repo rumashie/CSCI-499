@@ -44,8 +44,9 @@ def chat():
     data = request.get_json()
     user_message = data.get('message')
     conversation = data.get('conversation', [])
+    tts_enabled = data.get('ttsEnabled', False)
     conversation = init_messages(conversation)
-    response = handle_message(user_message, conversation)
+    response = handle_message(user_message, conversation, tts_enabled=tts_enabled)
     return jsonify(response)
 
 if __name__ == '__main__':
