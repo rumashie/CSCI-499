@@ -31,7 +31,7 @@ def get_events():
     data = request.get_json()
     calendar_id = data.get('calendarId')
     service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
-    events = fetch_events(calendar_id, service)
+    events = fetch_events(calendar_id, service, 5)
     return jsonify(events)
 
 """
