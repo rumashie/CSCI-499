@@ -6,19 +6,30 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.session-timer-container h2 {
+  }
+  
+  .session-timer-container h2 {
     margin: 0 0 10px;
-}
-
-.timer-controls {
+  }
+  
+  .timer-and-reports {
+    display: flex;
+    gap: 40px;
+  }
+  
+  .timer-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.input-field {
+  }
+  
+  .timer-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input-field {
     background-color: #333;
     color: #fff;
     border: 1px solid #666;
@@ -27,9 +38,9 @@
     margin-bottom: 10px;
     width: 100px;
     text-align: center;
-}
-
-.timer-button {
+  }
+  
+  .timer-button {
     background-color: #2d86e0;
     color: #fff;
     border: none;
@@ -37,18 +48,18 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.timer-button.running {
+  }
+  
+  .timer-button.running {
     background-color: #ff6347;
-}
-
-.timer-button:disabled {
+  }
+  
+  .timer-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-}
-
-.session-progress-bar {
+  }
+  
+  .session-progress-bar {
     position: relative;
     width: 200px;
     height: 200px;
@@ -58,18 +69,18 @@
     align-items: center;
     margin-top: 20px;
     overflow: hidden;
-}
-
-.timer-value {
+  }
+  
+  .timer-value {
     font-size: 32px;
     font-weight: bold;
-}
-
-.remaining-text {
+  }
+  
+  .remaining-text {
     margin-top: 10px;
-}
-
-.exit-session-button {
+  }
+  
+  .exit-session-button {
     margin-top: 20px;
     background-color: #ff6347;
     color: #fff;
@@ -78,22 +89,22 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.exit-session-button:hover {
+  }
+  
+  .exit-session-button:hover {
     background-color: #cc4d39;
-}
-
-@keyframes circle-tick {
+  }
+  
+  @keyframes circle-tick {
     0% {
-        transform: rotate(0deg);
+      transform: rotate(0deg);
     }
     100% {
-        transform: rotate(360deg);
+      transform: rotate(360deg);
     }
-}
-
-.circle-progress {
+  }
+  
+  .circle-progress {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -103,9 +114,9 @@
     animation: circle-tick 1s linear infinite;
     border: 10px solid #ff6347;
     border-top-color: transparent;
-}
-
-.circle-progress::after {
+  }
+  
+  .circle-progress::after {
     content: "";
     position: absolute;
     width: 100%;
@@ -114,4 +125,94 @@
     box-sizing: border-box;
     border: 10px solid #2d86e0;
     border-top-color: transparent;
-}
+  }
+  
+  .reports-section {
+    flex: 1;
+  }
+  
+  .notes-container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .notes-input {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+  .productivity-reports {
+    width: 100%;
+  }
+  
+  .averages {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .progress-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .progress-bar {
+    background-color: #444;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .progress {
+    background-color: #2d5ae0;
+    height: 100%;
+    transition: width 0.5s ease;
+  }
+  
+  .progress-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 12px;
+  }
+  
+  .chart-container {
+    width: 100%;
+    height: 300px;
+  }
+
+  .goals {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .goals > div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .goals label {
+    margin-right: 10px;
+  }
+  
+  .input-field {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #666;
+    border-radius: 4px;
+    padding: 8px;
+    width: 100px;
+    text-align: center;
+  }
