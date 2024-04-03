@@ -1,7 +1,8 @@
 .task-list {
-  background-color: #2c2c2c;
+  background-color: #2a2a2a;
   padding: 20px;
   border-radius: 8px;
+  color: #fff;
 }
 
 .task-list-items {
@@ -9,19 +10,38 @@
 }
 
 .task-item {
-  background-color: #3c3c3c;
+  background-color: #333;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .task-item h3 {
   margin: 0;
 }
 
-.task-item p {
-  margin: 5px 0 0;
+.task-item.completed h3 {
+  text-decoration: line-through;
   color: #aaa;
+}
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.complete-icon,
+.delete-icon {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.complete-icon:hover,
+.delete-icon:hover {
+  color: #ccc;
 }
 
 .task-input-container {
@@ -49,5 +69,5 @@
 }
 
 .add-task-button:hover {
-  background-color: #333;
+  background-color: #484b4b;
 }
