@@ -17,7 +17,7 @@ function App() {
           <Sidebar />
           <div className="main-content">
             <Routes>
-              <Route path="/StudyMode" element={<StudyMode />} /> {/* need to host this  */}
+              <Route path="/productivity" element={<StudyMode />} /> {/* need to host this, online or some shit m please look */}
               <Route path="/" element={
                 <>
                   <TaskList />
