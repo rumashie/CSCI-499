@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import './Tasklist.css';
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { FaTimesCircle } from 'react-icons/fa';
 
 const Tasklist = () => {
   const [tasks, setTasks] = useState([
-    { id: 1, title: 'Presentations are due today', completed: false },
-    { id: 2, title: 'Meeting @ 1:00 PM', completed: false },
-    { id: 3, title: 'Catch Zeus in HeartGold', completed: false },
+    { id: 1, title: 'Grab a slice of pizza', completed: false, priority: 'low' },
+    { id: 2, title: 'Finish my assignment later', completed: false, priority: 'medium' },
+    { id: 3, title: 'Catch Mew with masterball', completed: false, priority: 'high' },
   ]);
 
   const addTask = () => {
     const taskInput = document.getElementById('task-input');
     const task = taskInput.value.trim();
     if (task !== '') {
+      const priority = getTaskPriority(task);
       const newTask = {
         id: tasks.length + 1,
         title: task,
         description: '',
         completed: false,
+        priority: priority,
       };
       setTasks([...tasks, newTask]);
       taskInput.value = '';
@@ -58,21 +60,21 @@ const Tasklist = () => {
     setTasks(updatedTasks);
   };
 
-  const getColor = (taskTitle) => {
-    const importantKeywords = ['important', 'critical', 'urgent', 'deadline', 'today'];
-    const somewhatImportantKeywords = ['meeting', 'presentation', 'appointment', 'review'];
-    if (containsAny(taskTitle, importantKeywords)) {
-      return '#ff6b6b';
-    } else if (containsAny(taskTitle, somewhatImportantKeywords)) {
-      return '#f9c74f';
-    } else {
-      return '#90be6d';
-    }
-  };
+  const getTaskPriority = (taskTitle) => {
+    const lowPriorityKeywords = [];
+    const mediumPriorityKeywords = ['medium', 'moderate', 'average', 'at', '@'];
+    const highPriorityKeywords = ['high', 'important', 'critical', 'major', 'urgent', 'deadline', 'due', 'midnight'];
 
-  const containsAny = (str, keywords) => {
-    const lowerCaseStr = str.toLowerCase();
-    return keywords.some(keyword => lowerCaseStr.includes(keyword.toLowerCase()));
+    const lowercaseTitle = taskTitle.toLowerCase();
+    if (lowPriorityKeywords.some((keyword) => lowercaseTitle.includes(keyword))) {
+      return 'low';
+    } else if (mediumPriorityKeywords.some((keyword) => lowercaseTitle.includes(keyword))) {
+      return 'medium';
+    } else if (highPriorityKeywords.some((keyword) => lowercaseTitle.includes(keyword))) {
+      return 'high';
+    } else {
+      return 'low';
+    }
   };
 
   return (
@@ -83,29 +85,33 @@ const Tasklist = () => {
           <div
             key={task.id}
             className={`task-item ${task.completed ? 'completed' : ''}`}
-            style={{ backgroundColor: getColor(task.title) }}
             draggable
             onDragStart={(e) => handleDragStart(e, task.id)}
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, task.id)}
           >
-            <h3>{task.title}</h3>
+            <div className="task-checkbox">
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => toggleTaskCompletion(task.id)}
+              />
+            </div>
+            <div className="task-details">
+              <h3>{task.title}</h3>
+            </div>
             <div className="task-actions">
-              <FaCheckCircle
-                className="complete-icon"
-                onClick={() => toggleTaskCompletion(task.id)}
-              />
-              <FaTimesCircle
-                className="delete-icon"
-                onClick={() => deleteTask(task.id)}
-              />
+              <div className={`priority-flag ${task.priority}`}></div>
+              <FaTimesCircle className="delete-icon" onClick={() => deleteTask(task.id)} />
             </div>
           </div>
         ))}
       </div>
       <div className="task-input-container">
-        <input id="task-input" type="text" placeholder="Enter new task" />
-        <button className="add-task-button" onClick={addTask}>+</button>
+        <input id="task-input" type="text" placeholder="Add a task" />
+        <button className="add-task-button" onClick={addTask}>
+          <span className="plus-icon">+</span>
+        </button>
       </div>
     </div>
   );
