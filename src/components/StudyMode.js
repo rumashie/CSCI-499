@@ -6,7 +6,7 @@ import 'chart.js/auto';
 const StudyMode = () => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(3);
+  const [timeRemaining, setTimeRemaining] = useState(22222);
   const [progress, setProgress] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [sessionData, setSessionData] = useState({
@@ -110,8 +110,8 @@ const StudyMode = () => {
       <div className="timer-and-reports">
         <div className="timer-section">
           <div className="timer-controls">
-            <div>
-              <label htmlFor="hours">H: </label>
+            <div className="input-group">
+              <label htmlFor="hours">H:</label>
               <input
                 type="number"
                 id="hours"
@@ -120,8 +120,8 @@ const StudyMode = () => {
                 className="input-field"
               />
             </div>
-            <div>
-              <label htmlFor="minutes">M: </label>
+            <div className="input-group">
+              <label htmlFor="minutes">M:</label>
               <input
                 type="number"
                 id="minutes"
@@ -137,7 +137,7 @@ const StudyMode = () => {
           <div
             className="session-progress-bar"
             style={{
-              background: `conic-gradient(#333 0deg, #333 ${progress}deg, transparent 0deg)`,
+              background: `conic-gradient(#2d86e0 ${progress}deg, #333 ${progress}deg)`,
             }}
           >
             <span className="timer-value">{formatTime(timeRemaining)}</span>
@@ -162,8 +162,8 @@ const StudyMode = () => {
               <p>Weekly Average: {getWeeklyAverage().toFixed(2)} hours</p>
             </div>
             <div className="goals">
-              <div>
-                <label htmlFor="dailyGoal">Daily Goal: </label>
+              <div className="input-group">
+                <label htmlFor="dailyGoal">Daily Goal:</label>
                 <input
                   type="number"
                   id="dailyGoal"
@@ -172,8 +172,8 @@ const StudyMode = () => {
                   className="input-field"
                 />
               </div>
-              <div>
-                <label htmlFor="weeklyGoal">Weekly Goal: </label>
+              <div className="input-group">
+                <label htmlFor="weeklyGoal">Weekly Goal:</label>
                 <input
                   type="number"
                   id="weeklyGoal"
