@@ -22,23 +22,16 @@
 .sidebar a {
   color: #fff;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: background-color 0.3s ease;
   display: flex;
   align-items: center;
   padding: 10px;
   border-radius: 5px;
 }
 
-.sidebar a:hover {
-  background-color: #2c2c2e;
-}
-
+.sidebar a:hover,
 .sidebar a.active {
   background-color: #2d86e0;
-}
-
-.sidebar a.active:hover {
-  background-color: #1c68b3;
 }
 
 .icon {
