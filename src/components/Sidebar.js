@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FaTasks, FaCalendarAlt, FaChartPie, FaUsers, FaQuestionCircle } from 'react-icons/fa';
 import './Sidebar.css';
 
@@ -8,34 +8,34 @@ const Sidebar = () => {
     <nav className="sidebar">
       <ul>
         <li>
-          <Link to="/" className="active">
+          <NavLink to="/" exact activeClassName="active">
             <FaTasks className="icon" />
             <span>My tasks</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/">
+          <NavLink to="/upcoming" activeClassName="active">
             <FaCalendarAlt className="icon" />
             <span>Upcoming tasks</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/productivity">
+          <NavLink to="/productivity" activeClassName="active">
             <FaChartPie className="icon" />
             <span>Productivity</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/">
+          <NavLink to="/collaborators" activeClassName="active">
             <FaUsers className="icon" />
             <span>Collaborators</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/">
+          <NavLink to="/help" activeClassName="active">
             <FaQuestionCircle className="icon" />
             <span>Help</span>
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>
