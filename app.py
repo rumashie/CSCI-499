@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from Chatbot import handle_message, init_messages
 from Google import create_service
-from GoogleCalendar import list_calendars, fetch_events
+from GoogleCalendar import list_calendars, fetch_events, delete_event
+from urllib.parse import unquote
 
 CLIENT_SECRET_FILE = 'path/to/your/client_secret.json'
 API_NAME = 'calendar'
@@ -48,6 +49,14 @@ def chat():
     conversation = init_messages(conversation)
     response = handle_message(user_message, conversation, tts_enabled=tts_enabled)
     return jsonify(response)
+
+@app.route('/delete-event/<calendar_name>/<event_name>', methods=['DELETE'])
+def delete_event_route(calendar_name, event_name):
+    calendar_name = unquote(calendar_name)
+    event_name = unquote(event_name)
+    service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+    response = delete_event(calendar_name, event_name, service)
+    return jsonify({'message': response}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

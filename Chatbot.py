@@ -182,5 +182,4 @@ def process_response(reply, message_log, user_input):
     #if no calendar function was called then it is a general question and the answer will be printed
     else:
         text = reply
-        #text_to_speech(reply)
     return text
