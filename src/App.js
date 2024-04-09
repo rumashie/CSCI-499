@@ -7,6 +7,7 @@ import TaskList from './components/Tasklist';
 import CalendarView from './components/CalendarView';
 import WidgetSection from './components/WidgetSection';
 import StudyMode from './components/StudyMode'; 
+import WeatherWidget from './components/WeatherWidget';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
                   <TaskList />
                   <CalendarView />
                   <WidgetSection />
+                  <WeatherWidget />
                 </>
               } />
             </Routes>
