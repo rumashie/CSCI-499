@@ -5,6 +5,7 @@ Developed by: Leonardo Gonzalez Luzon
 
 import os
 from datetime import datetime
+import pytz
 from collections import namedtuple
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
