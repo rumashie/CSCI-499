@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from Chatbot import handle_message, init_messages
 from Google import create_service
-from GoogleCalendar import list_calendars, fetch_events, delete_event
+from GoogleCalendar import list_calendars, fetch_events, delete_event, edit_event_front
 from urllib.parse import unquote
 
 CLIENT_SECRET_FILE = 'path/to/your/client_secret.json'
@@ -57,6 +57,19 @@ def delete_event_route(calendar_name, event_name):
     service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
     response = delete_event(calendar_name, event_name, service)
     return jsonify({'message': response}), 200
+
+@app.route('/edit-event/<calendar_id>/<event_id>', methods=['POST'])
+def edit_event_route(calendar_id, event_id):
+    data = request.get_json()
+    new_title = data.get('newTitle')
+    new_start = data.get('newStart')
+    new_end = data.get('newEnd')
+    service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+    response = edit_event_front(calendar_id, event_id, new_title, new_start, new_end, service)
+    if response:
+        return jsonify({'message': 'Event updated successfully'}), 200
+    else:
+        return jsonify({'message': 'Failed to update event'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

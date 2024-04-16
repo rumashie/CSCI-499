@@ -8,6 +8,8 @@ from Google import convert_to_datetime
 from speech_to_text import text_to_speech, speech_to_text
 from datetime import datetime
 import pytz
+from googleapiclient.errors import HttpError
+
 
 client = OpenAI(api_key = constants.APIKEY)
 
@@ -288,3 +290,20 @@ def edit_event(calendar_name, event_name, user_input, service):
     else:
         str = "\n" + "Either the calendar or the event doesn't exist." + "\n"
         return str
+
+def edit_event_front(calendar_id, event_id, new_title, new_start, new_end, service):
+    try:
+        event = service.events().get(calendarId=calendar_id, eventId=event_id).execute()
+
+        if new_title:
+            event['summary'] = new_title
+        if new_start:
+            event['start'] = {'dateTime': new_start, 'timeZone': 'America/New_York'}
+        if new_end:
+            event['end'] = {'dateTime': new_end, 'timeZone': 'America/New_York'}
+
+        updated_event = service.events().update(calendarId=calendar_id, eventId=event_id, body=event).execute()
+        return True
+    except HttpError as error:
+        print(f'An error occurred: {error}')
+        return False
