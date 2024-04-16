@@ -154,7 +154,6 @@ goes through the desired calendar and pulls all of the events in order of date a
 list conataing relavent information like the id title and start and end times then returns the first 5
 """
 def fetch_events(calendar_id, service, max_results):
-    # Set the timeMin to the current time in UTC
     now = datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
     try:
         events_result = service.events().list(
@@ -165,21 +164,26 @@ def fetch_events(calendar_id, service, max_results):
             orderBy='startTime'
         ).execute()
         events = events_result.get('items', [])
-        # sets time zone to eastern time
         eastern = pytz.timezone('America/New_York')
         formatted_events = []
         for event in events:
             start = event['start'].get('dateTime', event['start'].get('date'))
             end = event['end'].get('dateTime', event['end'].get('date'))
-            start_dt = datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z").astimezone(eastern)
-            end_dt = datetime.strptime(end, "%Y-%m-%dT%H:%M:%S%z").astimezone(eastern)
+            if 'T' in start:
+                start_dt = datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z").astimezone(eastern)
+                end_dt = datetime.strptime(end, "%Y-%m-%dT%H:%M:%S%z").astimezone(eastern)
+                time_str = f"{start_dt.strftime('%I:%M %p')} - {end_dt.strftime('%I:%M %p')}"
+            else:
+                start_dt = datetime.strptime(start, "%Y-%m-%d").date()
+                end_dt = datetime.strptime(end, "%Y-%m-%d").date()
+                time_str = "All Day"
             formatted_events.append({
                 'id': event['id'],
                 'title': event.get('summary', 'No Title'),
-                'start': start_dt.strftime("%Y-%m-%dT%H:%M:%S%z"),
-                'end': end_dt.strftime("%Y-%m-%dT%H:%M:%S%z"),
-                'date': start_dt.strftime("%m/%d"),
-                'time': f"{start_dt.strftime('%I:%M %p')} - {end_dt.strftime('%I:%M %p')}"
+                'start': start_dt.strftime("%Y-%m-%dT%H:%M:%S%z") if isinstance(start_dt, datetime) else start_dt.strftime("%Y-%m-%d"),
+                'end': end_dt.strftime("%Y-%m-%dT%H:%M:%S%z") if isinstance(end_dt, datetime) else end_dt.strftime("%Y-%m-%d"),
+                'date': start_dt.strftime("%m/%d") if isinstance(start_dt, datetime) else start_dt.strftime("%m/%d"),
+                'time': time_str
             })
         return formatted_events
     except Exception as e:
