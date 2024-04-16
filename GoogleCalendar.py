@@ -200,20 +200,21 @@ def edit_event_helper(calendar_name, user_input, service):
     You will also recieve a input from the user with a request to change certain things on their event they could ask to change the name of the event, the start time, or the end time.
     The user can ask to change up to all 3 pieces of information on the specified event
     You will respond my giving the new information seperated by a comma, if a piece of information is not changed you will put None in its place.
-    If a user asks for a new start time but doesnt include a new date just assume its on the same day
-    If the user asks for a new start time that is after the current end time of their event and they don't give a new end time, just push the end time back based on the current event duration
+    If a user asks for a new start time but doesn't include a new date just assume its on the same day
+    NOTE: If the user asks for a new start time that is after the current end time of their event and they don't give a new end time, just push the end time back based on the current event duration
     Example: if the user's event starts at 4/2/2024 11:00am and ends at 4/2/2024 1:00pm and they say they want to change the start time to 2pm and doesnt give a end time you would return: None, 4/2/2024 2:00pm, 4/2/2024 4:00pm 
     Make sure to respond with the changes for the correct calendar. If the user wants changes to their lunch event make sure to look at the event list to get the inforamtion connected to the event called lunch and not the information of another event
     These are a few more examples of how you should respond 
+ 
 
-    Question: can you change lunch to start at 2pm
+    Question: can you change my lunch event on my school calendar to start at 12pm
     [{'title': 'lunch',
-      'start': '04/02/2024 10:45am',
+      'start': '04/02/2024 11:00am',
       'end': '04/02/2024 11:45am'},
     {'title': 'dinner',
      'start': '04/02/2024 06:00pm',
      'end': '04/02/2024 08:00pm'}]
-    Response: None, 04/02/2024 2:00pm, 04/02/2024 3:00pm
+    Response: None, 04/02/2024 12:00pm, 04/02/2024 12:45pm
     
     Question: can you change lunch to start at 11am
     [{'title': 'lunch',
@@ -261,7 +262,6 @@ def edit_event_helper(calendar_name, user_input, service):
 
 def edit_event(calendar_name, event_name, user_input, service):
     new_event_name, new_start_time, new_end_time = edit_event_helper(calendar_name, user_input, service)
-
     calendarID = get_calendarID(calendar_name, service)
     eventID = get_event_ID(calendar_name, event_name, service)
     if calendarID and eventID:
