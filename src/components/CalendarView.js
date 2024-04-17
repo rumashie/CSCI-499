@@ -162,7 +162,28 @@ const CalendarView = () => {
             <button className="view-schedule-button">View entire schedule</button>
 
             {isEditing && (
-                <ReactModal isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
+                <ReactModal 
+                    isOpen={isEditing}
+                    onRequestClose={() => setIsEditing(false)}
+                    style={{
+                        overlay: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.75)'
+                        },
+                        content: {
+                            color: 'white',
+                            background: '#2c2c2c',
+                            border: '1px solid #ccc',
+                            borderRadius: '10px',
+                            top: '50%',
+                            left: '50%',
+                            right: 'auto',
+                            bottom: 'auto',
+                            marginRight: '-50%',
+                            transform: 'translate(-50%, -50%)',
+                            padding: '20px'
+                        }
+                    }}
+                >
                     <h2>Edit Event</h2>
                     <label>
                         Event Name:

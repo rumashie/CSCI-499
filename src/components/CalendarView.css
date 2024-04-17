@@ -83,3 +83,61 @@
 .delete-button:hover {
   background-color: #ff0000;
 }
+
+.edit-button {
+  background-color: #ffffff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #b6b6b6;
+}
+
+.react-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.react-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #ccc;
+  background: #2c2c2c;
+  overflow: auto;
+  -webkit-overflow-scrolling: 'touch';
+  border-radius: 10px;
+  outline: none;
+  padding: 20px;
+  color: white;
+}
+
+.react-modal-content label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.react-modal-content input,
+.react-modal-content button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
