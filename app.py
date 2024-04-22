@@ -50,6 +50,11 @@ def chat():
     response = handle_message(user_message, conversation, tts_enabled=tts_enabled)
     return jsonify(response)
 
+"""
+when the x button next to an event is pressed that events info is sent ot this route
+that will take the info and call the delete event function to delete the event off of
+the users calendar
+"""
 @app.route('/delete-event/<calendar_name>/<event_name>', methods=['DELETE'])
 def delete_event_route(calendar_name, event_name):
     calendar_name = unquote(calendar_name)
@@ -58,6 +63,11 @@ def delete_event_route(calendar_name, event_name):
     response = delete_event(calendar_name, event_name, service)
     return jsonify({'message': response}), 200
 
+"""
+when an event is edited in the calendar view widget the changes are sent to this
+route which will call the edit event function to update the event with the new
+information the user changed
+"""
 @app.route('/edit-event/<calendar_id>/<event_id>', methods=['POST'])
 def edit_event_route(calendar_id, event_id):
     data = request.get_json()

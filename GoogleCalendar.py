@@ -191,13 +191,20 @@ def fetch_events(calendar_id, service, max_results):
     except Exception as e:
         print(f"Failed to fetch events: {e}")
         return []
-
+"""
+takes a string that contains a date and coverts it into the format that is used by the google calendar api
+"""
 def convert_time_format(str):
     dt = datetime.strptime(str, '%Y-%m-%dT%H:%M:%S%z')
     return dt.strftime('%m/%d/%Y %I:%M%p').lower()
 
+"""
+takes an users input and returns the changes that the user wants to make to their event. If a user doesn't wish to change a certain part of their event the function will return
+None to indicate no change
+"""
 def edit_event_helper(calendar_name, user_input, service):
     first_events = fetch_events(get_calendarID(calendar_name, service), service, 10000)
+    # this puts all of the users events on their calednar into a list that allows the ai to figure out which event needs to be changed and the start and end time changes that are needed
     events = [{'title': first_event['title'], 'start': convert_time_format(first_event['start']), 'end': convert_time_format(first_event['end'])} for first_event in first_events]
     classifier = """
     You will recieve a list containing events in a users calendar. 
@@ -258,6 +265,7 @@ def edit_event_helper(calendar_name, user_input, service):
         model="gpt-3.5-turbo"
     )
     reply = chat_completion.choices[0].message.content
+    # splits the changes into 3 seperate entities and returns
     info = reply.split(", ")
     for i in range(3):
         if info[i] == "None":
@@ -265,7 +273,13 @@ def edit_event_helper(calendar_name, user_input, service):
     return info[0], info[1], info[2]
 
 
-
+"""
+This is the edit event function that is used for the chatbot to edit events based on the users message
+    calendar_name: the name of the calednar that the event is on
+    event_name: the name of the event that the user wants changed
+    user_input: the users message that contains the areas of the event the user wants changed
+    service: a service instance to utillize the Google API
+"""
 def edit_event(calendar_name, event_name, user_input, service):
     new_event_name, new_start_time, new_end_time = edit_event_helper(calendar_name, user_input, service)
     calendarID = get_calendarID(calendar_name, service)
@@ -291,6 +305,9 @@ def edit_event(calendar_name, event_name, user_input, service):
         str = "\n" + "Either the calendar or the event doesn't exist." + "\n"
         return str
 
+"""
+This is the edit event function that is used for the front end on the calendar view widget
+"""
 def edit_event_front(calendar_id, event_id, new_title, new_start, new_end, service):
     try:
         event = service.events().get(calendarId=calendar_id, eventId=event_id).execute()

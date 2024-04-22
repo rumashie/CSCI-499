@@ -56,6 +56,7 @@ const WidgetSection = () => {
         isTtsEnabledRef.current = isTtsEnabled;
     }, [isTtsEnabled]);
 
+    // checks the microphone button to see if the application needs to listen for an audio input
     useEffect(() => {
         if (recognition) {
             recognition.onresult = (event) => {
@@ -89,11 +90,13 @@ const WidgetSection = () => {
         };
     }, [recognition]);
 
+    // saves the message log
     useEffect(() => {
         const savedMessages = JSON.parse(localStorage.getItem('messages') || '[]');
         setMessages(savedMessages);
     }, []);
 
+    // makes sure that the chat window is always scrolled all the way down after a input so that users dont have to keep scrolling down
     useEffect(() => {
         const scrollToBottom = () => {
             if (chatboxBodyRef.current) {
@@ -104,8 +107,7 @@ const WidgetSection = () => {
         scrollToBottom();
     }, [messages]);
 
-     // sends and recieves chatbot messages through calling the functions from the chatbot file and then saves it to the message history
-    // sends and receives chatbot messages through calling the functions from the chatbot file and then saves it to the message h
+    // sends and recieves chatbot messages through calling the functions from the chatbot file and then saves it to the message history
     const sendMessageToChatbot = async (text = inputMessage) => {
         if (!text.trim()) return;
         setInputMessage('');
@@ -153,6 +155,7 @@ const WidgetSection = () => {
         }
     };
 
+    // clears the chat message history
     const clearMessageHistory = () => {
         setMessages([]);
         localStorage.removeItem('messages');

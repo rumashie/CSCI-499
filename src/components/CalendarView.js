@@ -35,7 +35,8 @@ const CalendarView = () => {
             .catch((error) => console.error('Error fetching events:', error));
         }
     }, [selectedCalendar]);
-
+    
+    // calls on the flask app to use the delete event function to delete an event when the user clicks the x next to the specified event
     const handleDeleteEvent = (eventName, calendarName) => {
         fetch(`http://localhost:5000/delete-event/${encodeURIComponent(calendarName)}/${encodeURIComponent(eventName)}`, {
             method: 'DELETE',
@@ -47,6 +48,7 @@ const CalendarView = () => {
         })
         .catch((error) => console.error('Error:', error));
     };
+    // recieves all of the information of the event
     const handleEditEvent = (event) => {
         const [originalStartDate, originalStartTime] = event.start.split('T');
         const [originalEndDate, originalEndTime] = event.end.split('T');
@@ -54,9 +56,9 @@ const CalendarView = () => {
             id: event.id,
             title: event.title,
             startDate: originalStartDate,
-            startTime: originalStartTime.substring(0, 5), // Assuming the format includes timezone like "HH:MM:SS-00:00"
+            startTime: originalStartTime.substring(0, 5),
             endDate: originalEndDate,
-            endTime: originalEndTime.substring(0, 5), // Truncate to "HH:MM"
+            endTime: originalEndTime.substring(0, 5),
             originalTitle: event.title,
             originalStartDate: originalStartDate,
             originalStartTime: originalStartTime,
@@ -65,17 +67,15 @@ const CalendarView = () => {
         });
         setIsEditing(true);
     };
-    
+    // this helps keep the format of the date time in a way that the google calendar can use
     const formatDateTime = (date, time, originalTime) => {
-        // Use originalTime if new time is not provided to prevent unintended shifts
-        time = time || originalTime.split('T')[1].substring(0, 5); // Assumes originalTime is in ISO format with timezone
+        time = time || originalTime.split('T')[1].substring(0, 5);
+        const timeZone = originalTime ? originalTime.slice(-6) : '-04:00'; 
     
-        // Properly handle timezone. Extract timezone from originalTime if not manipulating time.
-        const timeZone = originalTime ? originalTime.slice(-6) : '-04:00'; // Default to ET if no originalTime provided
-    
-        return `${date}T${time}:00${timeZone}`; // Keep the original timezone
+        return `${date}T${time}:00${timeZone}`;
     };
 
+    // updates the information of the event on the front end
     const updateEvent = () => {
         const start = formatDateTime(
             editingEvent.startDate || editingEvent.originalStartDate,
@@ -87,13 +87,15 @@ const CalendarView = () => {
             editingEvent.endTime,
             editingEvent.originalEnd
         );
+        // checks to make sure that the start time isnt after the end time and vice versa
         const startDateTime = new Date(start);
         const endDateTime = new Date(end);
         if (startDateTime >= endDateTime) {
             alert("The start time/date cannot be later than the end time/date.");
             return; // Stop the function from proceeding
         }
-        const title = editingEvent.title || editingEvent.originalTitle; // Use the original title if unchanged
+        // if this is unchanged it will use the original value
+        const title = editingEvent.title || editingEvent.originalTitle;
 
         fetch(`http://localhost:5000/edit-event/${selectedCalendar}/${editingEvent.id}`, {
             method: 'POST',
@@ -109,7 +111,7 @@ const CalendarView = () => {
         .then(response => response.json())
         .then(() => {
             setIsEditing(false);
-            fetchEvents(); // Refresh the events list
+            fetchEvents();
         })
         .catch((error) => console.error('Error:', error));
     };
