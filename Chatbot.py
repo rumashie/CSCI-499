@@ -5,7 +5,7 @@ Developed by: Leonardo Gonzalez Luzon
 
 from openai import OpenAI
 import constants
-from GoogleCalendar import create_calendar, delete_calendar, create_event, delete_event, edit_event
+from GoogleCalendar import create_calendar, delete_calendar, create_event, delete_event, edit_event, calendar_information
 from Google import create_service
 from Spotify import get_token, play_song, create_playlist
 from weather import get_forecast
@@ -36,6 +36,7 @@ def init_messages(message_log):
     The possible types of questions are:
     - A general question, that can be answered by the chatbot
     - A request to do something with their calendar
+    - A request for information about certain events on their calendar
     - A request for a song that can be played on Spotify
     - A request for the weather or forecast
     If you think the question is a general question that can be answered over the internet, then answer their question. 
@@ -84,6 +85,12 @@ def init_messages(message_log):
 
     Question: can you change my event called study on my college calendar to be called hang out with friends
     Response: Edit event, college, study
+
+    If you think the user is trying to recieve information about certain events on their calendar whether it be whens their next event, what events they have on certain days,
+    what do I have to do tomorrow, etc, just respond as follows
+    Calendar_Information, calendar_name
+    If the user doesn't give a calendar name then ask for it
+    Remember if the user says something like "on my school calendar" or "on my calendar called school" the calendar_name would be "school" not "school calendar"
 
     If you think the question is a request to do something that has to do with music or something that can be accomplished with the SpotifyAPI, then give me a phrase
     that corrisponds to the action they want to do. Then give me the attributes needed to perform each task from the user input. 
@@ -178,6 +185,8 @@ def process_response(reply, message_log, user_input):
         get_forecast(info[1])
     elif info[0] == "Edit event":
         text = edit_event(info[1], info[2], user_input, service)
+    elif info[0] == "Calendar_Information":
+        text = calendar_information(info[1], user_input, service)
     
     #if no calendar function was called then it is a general question and the answer will be printed
     else:

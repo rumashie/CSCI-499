@@ -324,3 +324,83 @@ def edit_event_front(calendar_id, event_id, new_title, new_start, new_end, servi
     except HttpError as error:
         print(f'An error occurred: {error}')
         return False
+    
+
+"""
+Creates an Event to an existing calendar users can add information like start, end, and an optional description to there event
+    Event start and end time must be in this format "2/25/2024 7:00am" or "11/25/2024 11:00pm"
+
+    calendar_name: name of the calendar
+    event_name: name of the event
+    start_time: the start date and time of the event
+    end_time: the end date and time of the event
+    service: a service instance to utillize the Google API
+    description: the optional description of the event
+"""
+def create_event_front(calendarId, event_name, start_time, end_time, service, description=''):
+    if calendarId:
+        event_request_body = {
+            'start' : {
+                'dateTime': start_time,
+                'timeZone' : 'America/New_York'
+            },
+            'end' : {
+                'dateTime': end_time,
+                'timeZone' : 'America/New_York'
+            },
+            'summary' : event_name,
+            'description': description,
+            'colorId' : 5,
+            'status' : "confirmed",
+            "transparency" : "opaque",
+            "visibility" : "private",
+        }
+        maxAttendees = 5
+        sendNotifications = False
+        sendUpdates = 'none'
+        supportsAttachments = False
+
+        service.events().insert(
+            calendarId=calendarId,
+            maxAttendees=maxAttendees,
+            sendUpdates=sendUpdates,
+            sendNotifications=sendNotifications,
+            supportsAttachments=supportsAttachments,
+            body=event_request_body
+        ).execute()
+
+"""
+recieves user input and relays information to the user based off their request
+    calendar_name: the name of the calendar
+    user_input: the users request
+    service: a service instance to utillize the Google API
+"""
+def calendar_information(calendar_name, user_input, service):
+    print(calendar_name)
+    first_events = fetch_events(get_calendarID(calendar_name, service), service, 10000)
+    # this puts all of the users events on their calednar into a list that allows the ai to figure out which event needs to be changed and the start and end time changes that are needed
+    events = [{'title': first_event['title'], 'start': convert_time_format(first_event['start']), 'end': convert_time_format(first_event['end'])} for first_event in first_events]
+    # gets the real time so that the chatbot can make more accurate responses
+    current_datetime = datetime.now()
+    formatted_date = current_datetime.strftime('%B %d, %Y %I:%M%p').lower()
+    print(formatted_date)
+    classifier = """
+    You will recieve a list containing events in a users calendar and the current date.
+    Each event in the list will contain 3 pieces of information pertaining to each event and those are the title, the start time, and the end time.
+    Note the start and end time is a date plus a time.
+    You will also recieve a message from the user asking you a question about the events on their calendar.
+    Using the information you have answer their request to the best of your ability.
+    For example, if the user asks whats their next upcoming event you would tell them the next event on their calendar,
+    if they ask you to see what time a certain event starts you would look through the events to find the relevent information to relay to the user
+    MAKE SURE THAT YOU REMEMBER THE TIME THAT IS GIVEN TO YOU
+    """
+    message_log = [{'role' : "system", "content" : classifier}]
+    events_str = ', '.join([f"{event['title']} (Start: {event['start']}, End: {event['end']})" for event in events])
+    message = f"Today is {formatted_date}. These are my events: {events_str}. And this is my request: {user_input}"
+    message_log.append({"role": "user", "content": message})
+    chat_completion = client.chat.completions.create(
+        messages=message_log,
+        model="gpt-3.5-turbo"
+    )
+    reply = chat_completion.choices[0].message.content
+    return reply
