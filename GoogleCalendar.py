@@ -9,6 +9,8 @@ from speech_to_text import text_to_speech, speech_to_text
 from datetime import datetime
 import pytz
 from googleapiclient.errors import HttpError
+from dateutil.parser import parse
+from datetime import timedelta
 
 
 client = OpenAI(api_key = constants.APIKEY)
@@ -324,7 +326,75 @@ def edit_event_front(calendar_id, event_id, new_title, new_start, new_end, servi
     except HttpError as error:
         print(f'An error occurred: {error}')
         return False
-    
+
+"""
+checks to see if there is any overlap when an event is added and adjusts the events so that there is no overlap
+    calendar_id: the calendars id
+    new_event: the information of the new event(ie: name, start time, end time)
+    existing_events: a list of the events on the users calendar that contains the information of each event
+    service: a service instance to utillize the Google API
+"""    
+def adjust_events(calendar_id, new_event, existing_events, service):
+    # use parse to get the start and end times
+    new_event_start = parse(new_event['start'])
+    new_event_end = parse(new_event['end'])
+    # sort events by start time to handle them in order just to avoid any issues
+    existing_events.sort(key=lambda x: parse(x['start']))
+    #loops though the entire list of events to check if there is any overlap with the new event
+    for i, event in enumerate(existing_events):
+        event_start = parse(event['start'])
+        event_end = parse(event['end'])
+        event_id = event['id']
+        # checks for overlap
+        if max(new_event_start, event_start) < min(new_event_end, event_end):
+            # if a overlap is detected then the event will be adjusted to make room for the new event
+            adjusted_start = new_event_end
+            adjusted_end = adjusted_start + (event_end - event_start)
+            # update the event through the Google Calendar API
+            updated_event = {
+                'summary': event['title'],
+                'start': {'dateTime': adjusted_start.isoformat(), 'timeZone': 'America/New_York'},
+                'end': {'dateTime': adjusted_end.isoformat(), 'timeZone': 'America/New_York'},
+                'description': event.get('description', ''),
+                'status': 'confirmed',
+                'colorId': event.get('colorId', '1'),
+                'transparency': 'opaque',
+                'visibility': 'private',
+            }
+            try:
+                service.events().update(calendarId=calendar_id, eventId=event_id, body=updated_event).execute()
+            except HttpError as error:
+                print(f"Failed to update event: {error}")
+                continue
+            # updates the exisiting variable to hold the end time of the newly shifted event
+            new_event_end = adjusted_end
+            # checks on future events to see if the shifted event caused any overlaps
+            for j in range(i+1, len(existing_events)):
+                sub_event = existing_events[j]
+                sub_event_start = parse(sub_event['start'])
+                sub_event_end = parse(sub_event['end'])
+                # checks for overlap
+                if adjusted_end > sub_event_start:
+                    # adjusts the event to eliminate the overlap
+                    new_sub_event_start = adjusted_end
+                    new_sub_event_end = new_sub_event_start + (sub_event_end - sub_event_start)
+                    sub_event_update = {
+                        'summary': sub_event['title'],
+                        'start': {'dateTime': new_sub_event_start.isoformat(), 'timeZone': 'America/New_York'},
+                        'end': {'dateTime': new_sub_event_end.isoformat(), 'timeZone': 'America/New_York'},
+                        'description': sub_event.get('description', ''),
+                        'status': 'confirmed',
+                        'colorId': sub_event.get('colorId', '1'),
+                        'transparency': 'opaque',
+                        'visibility': 'private',
+                    }
+                    service.events().update(calendarId=calendar_id, eventId=sub_event['id'], body=sub_event_update).execute()
+                    # updates the variable to keep looping through the event list to check for any more overlaps
+                    adjusted_end = new_sub_event_end
+                else:
+                    # if there are no more overlaps then the function is done
+                    break
+    return True
 
 """
 Creates an Event to an existing calendar users can add information like start, end, and an optional description to there event
@@ -338,36 +408,43 @@ Creates an Event to an existing calendar users can add information like start, e
     description: the optional description of the event
 """
 def create_event_front(calendarId, event_name, start_time, end_time, service, description=''):
-    if calendarId:
-        event_request_body = {
-            'start' : {
-                'dateTime': start_time,
-                'timeZone' : 'America/New_York'
-            },
-            'end' : {
-                'dateTime': end_time,
-                'timeZone' : 'America/New_York'
-            },
-            'summary' : event_name,
-            'description': description,
-            'colorId' : 5,
-            'status' : "confirmed",
-            "transparency" : "opaque",
-            "visibility" : "private",
-        }
-        maxAttendees = 5
-        sendNotifications = False
-        sendUpdates = 'none'
-        supportsAttachments = False
+    existing_events = fetch_events(calendarId, service, 10000)
+    new_event = {
+        'title': event_name,
+        'start': start_time,
+        'end': end_time,
+        'description': description
+    }
+    adjust_events(calendarId, new_event, existing_events, service)
+    event_request_body = {
+        'start' : {
+            'dateTime': start_time,
+            'timeZone' : 'America/New_York'
+        },
+        'end' : {
+            'dateTime': end_time,
+            'timeZone' : 'America/New_York'
+        },
+        'summary' : event_name,
+        'description': description,
+        'colorId' : 5,
+        'status' : "confirmed",
+        "transparency" : "opaque",
+        "visibility" : "private",
+    }
+    maxAttendees = 5
+    sendNotifications = False
+    sendUpdates = 'none'
+    supportsAttachments = False
 
-        service.events().insert(
-            calendarId=calendarId,
-            maxAttendees=maxAttendees,
-            sendUpdates=sendUpdates,
-            sendNotifications=sendNotifications,
-            supportsAttachments=supportsAttachments,
-            body=event_request_body
-        ).execute()
+    service.events().insert(
+        calendarId=calendarId,
+        maxAttendees=maxAttendees,
+        sendUpdates=sendUpdates,
+        sendNotifications=sendNotifications,
+        supportsAttachments=supportsAttachments,
+        body=event_request_body
+    ).execute()
 
 """
 recieves user input and relays information to the user based off their request
