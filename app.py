@@ -4,6 +4,7 @@ from Chatbot import handle_message, init_messages
 from Google import create_service
 from GoogleCalendar import list_calendars, fetch_events, delete_event, edit_event_front, create_event_front
 from urllib.parse import unquote
+from EmailGPT import get_email_summaries, send_email_response
 
 CLIENT_SECRET_FILE = 'path/to/your/client_secret.json'
 API_NAME = 'calendar'
@@ -91,6 +92,26 @@ def create_event_route(calendar_id):
     service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
     response = create_event_front(calendar_id, data['title'], data['start'], data['end'], service)
     return jsonify({'message': response}), 200
+
+@app.route('/email-summaries', methods=['GET'])
+def get_email_summaries_route():
+    email_summaries = get_email_summaries()
+    return jsonify(email_summaries)
+
+@app.route('/collab', methods=['POST'])
+def respond_to_email():
+    data = request.get_json()
+    email_id = data.get('emailId')
+    response = data.get('response')
+    send_email_response(email_id, response)
+    return jsonify({'message': 'Email sent successfully'})
+
+
+@app.route('/email-summaries-search', methods=['GET'])
+def get_email_summaries_search_route():
+    search_query = request.args.get('search', '')
+    email_summaries = get_email_summaries(search_query)
+    return jsonify(email_summaries)
 
 if __name__ == '__main__':
     app.run(debug=True)
