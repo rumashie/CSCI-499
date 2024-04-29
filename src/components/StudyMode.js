@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './StudyMode.css';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { FaTimesCircle } from 'react-icons/fa';
 
 const StudyMode = () => {
   const [hours, setHours] = useState(0);
@@ -19,15 +20,22 @@ const StudyMode = () => {
   const [dailyGoal, setDailyGoal] = useState(2);
   const [weeklyGoal, setWeeklyGoal] = useState(7);
   const [notes, setNotes] = useState('');
+  const [tasks, setTasks] = useState([]);
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [selectedTask, setSelectedTask] = useState(null);
 
   const initialDuration = useRef(0);
   const intervalRef = useRef(null);
 
+  const [selectedPriority, setSelectedPriority] = useState('low');
+
   const startTimer = () => {
-    let totalSeconds = hours * 3600 + minutes * 60;
-    setTimeRemaining(totalSeconds);
-    initialDuration.current = totalSeconds;
-    setIsTimerRunning(true);
+    if (selectedTask) {
+      let totalSeconds = hours * 3600 + minutes * 60;
+      setTimeRemaining(totalSeconds);
+      initialDuration.current = totalSeconds;
+      setIsTimerRunning(true);
+    }
   };
 
   useEffect(() => {
@@ -46,6 +54,7 @@ const StudyMode = () => {
       setIsTimerRunning(false);
       alert('Timer has completed!');
       saveSessionData();
+      moveTaskToCompleted();
     } else {
       setProgress((1 - timeRemaining / initialDuration.current) * 360);
     }
@@ -61,7 +70,7 @@ const StudyMode = () => {
   const saveSessionData = () => {
     const newSession = {
       date: new Date().toISOString(),
-      duration: initialDuration.current / 3600, 
+      duration: initialDuration.current / 3600,
       notes: notes,
     };
     setSessionData((prevData) => ({
@@ -95,18 +104,123 @@ const StudyMode = () => {
     labels: sessionData.sessions.map((session) => new Date(session.date).toLocaleDateString()),
     datasets: [
       {
-        label: 'Study Time (hours)',
+        label: 'Analytics',
         data: sessionData.sessions.map((session) => session.duration),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: '#95bdf2',
+        borderColor: '#95bdf2',
         borderWidth: 1,
       },
     ],
   };
 
+  const addTask = () => {
+    if (newTaskTitle.trim() !== '') {
+      const newTask = {
+        id: tasks.length + 1,
+        title: newTaskTitle.trim(),
+        completed: false,
+        priority: selectedPriority,
+      };
+      setTasks([...tasks, newTask]);
+      setNewTaskTitle('');
+      setSelectedPriority('low');
+    }
+  };
+
+  const deleteTask = (taskId) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+  };
+
+
+  const moveTaskToInProgress = () => {
+    if (selectedTask) {
+      const updatedTasks = tasks.map((task) => {
+        if (task.id === selectedTask.id) {
+          return { ...task, completed: false };
+        }
+        return task;
+      });
+      setTasks(updatedTasks);
+    }
+  };
+
+  const moveTaskToCompleted = () => {
+    if (selectedTask) {
+      const updatedTasks = tasks.map((task) => {
+        if (task.id === selectedTask.id) {
+          return { ...task, completed: true };
+        }
+        return task;
+      });
+      setTasks(updatedTasks);
+      setSelectedTask(null);
+    }
+  };
+
   return (
     <div className="session-timer-container">
-      <h2>SESSION 1</h2>
+      <h2>Planner</h2>
+      <div className="progress-tracker">
+        <div className="progress-column">
+          <h3>To Do</h3>
+          <ul className="task-list">
+            {tasks
+              .filter((task) => !task.completed)
+              .map((task) => (
+                <li
+                  key={task.id}
+                  onClick={() => setSelectedTask(task)}
+                  className={selectedTask && selectedTask.id === task.id ? 'selected' : ''}
+                >
+                  <span className={`priority-dot ${task.priority}`}></span>
+                  <span className="task-title">{task.title}</span>
+                </li>
+              ))}
+          </ul>
+          <div className="task-input-container">
+            <input
+              id="task-input"
+              type="text"
+              placeholder="Add a task"
+              value={newTaskTitle}
+              onChange={(e) => setNewTaskTitle(e.target.value)}
+            />
+            <select
+              value={selectedPriority}
+              onChange={(e) => setSelectedPriority(e.target.value)}
+              className="priority-select"
+            >
+              <option value="low">Low Priority</option>
+              <option value="medium">Priority</option>
+              <option value="high">Urgent</option>
+            </select>
+            <button className="add-task-button" onClick={addTask}>
+              <span className="plus-icon">+</span>
+            </button>
+          </div>
+        </div>
+        <div className="progress-column">
+          <h3>In Progress</h3>
+          <ul className="task-list">
+            {selectedTask && !selectedTask.completed && <li>{selectedTask.title}</li>}
+          </ul>
+        </div>
+        <div className="progress-column">
+          <h3>Completed</h3>
+          <ul className="task-list">
+            {tasks
+              .filter((task) => task.completed)
+              .map((task) => (
+                <li key={task.id}>
+                  <span className={`priority-dot ${task.priority}`}></span>
+                  <span className="task-title">{task.title}</span>
+                  <FaTimesCircle className="delete-icon" onClick={() => deleteTask(task.id)} />
+                </li>
+              ))}
+          </ul>
+        </div>
+      </div>
       <div className="timer-and-reports">
         <div className="timer-section">
           <div className="timer-controls">
@@ -130,14 +244,18 @@ const StudyMode = () => {
                 className="input-field"
               />
             </div>
-            <button onClick={startTimer} disabled={isTimerRunning} className={`timer-button ${isTimerRunning ? 'running' : ''}`}>
+            <button
+              onClick={startTimer}
+              disabled={isTimerRunning || !selectedTask}
+              className={`timer-button ${isTimerRunning ? 'running' : ''}`}
+            >
               {isTimerRunning ? 'Timer Running' : 'Start Timer'}
             </button>
           </div>
           <div
             className="session-progress-bar"
             style={{
-              background: `conic-gradient(#2d86e0 ${progress}deg, #333 ${progress}deg)`,
+              background: `conic-gradient(#fff ${progress}deg, #95bdf2 ${progress}deg)`,
             }}
           >
             <span className="timer-value">{formatTime(timeRemaining)}</span>
@@ -150,6 +268,7 @@ const StudyMode = () => {
               setIsTimerRunning(false);
               setTimeRemaining(0);
               setProgress(0);
+              moveTaskToInProgress();
             }}
           >
             Exit session early
@@ -158,8 +277,8 @@ const StudyMode = () => {
         <div className="reports-section">
           <div className="productivity-reports">
             <div className="averages">
-              <p>Daily Average: {getDailyAverage().toFixed(2)} hours</p>
-              <p>Weekly Average: {getWeeklyAverage().toFixed(2)} hours</p>
+              <p>Daily: {getDailyAverage().toFixed(2)} hours</p>
+              <p>Weekly: {getWeeklyAverage().toFixed(2)} hours</p>
             </div>
             <div className="goals">
               <div className="input-group">
@@ -194,7 +313,7 @@ const StudyMode = () => {
               </div>
             </div>
             <div className="chart-container">
-              <Bar data={chartData} options={{ maintainAspectRatio: false }} />
+              <Line data={chartData} options={{ maintainAspectRatio: false }} />
             </div>
           </div>
         </div>
