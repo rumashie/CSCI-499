@@ -14,6 +14,135 @@
   font-weight: bold;
 }
 
+.progress-tracker {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.progress-column {
+  flex: 1;
+  padding: 15px;
+  background-color: #141414;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.progress-column:last-child {
+  margin-right: 0;
+}
+
+.progress-column h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.session-timer-container .task-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.session-timer-container .task-list li {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #303132;
+  transition: background-color 0.3s ease;
+  background-color: #272b2e;
+}
+
+.session-timer-container .task-list li:hover {
+  background-color: #3c3c3c;
+}
+
+.session-timer-container .task-list li.selected {
+  background-color: #95bdf2;
+  color: #fff;
+}
+
+.session-timer-container .task-list li .priority-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.session-timer-container .task-list li .priority-dot.low {
+  background-color: #4caf50;
+}
+
+.session-timer-container .task-list li .priority-dot.medium {
+  background-color: #ffc107;
+}
+
+.session-timer-container .task-list li .priority-dot.high {
+  background-color: #f44336;
+}
+
+.session-timer-container .task-list li .task-title {
+  flex: 1;
+}
+
+.session-timer-container .priority-select {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #000000;
+  color: #7b7b7b;
+  margin-right: 10px;
+}
+
+.session-timer-container .task-input-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.session-timer-container #task-input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #000000;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.session-timer-container .add-task-button {
+  background-color: #95bdf2;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.session-timer-container .add-task-button:hover {
+  background-color: #1c68b3;
+}
+
+.session-timer-container .plus-icon {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.session-timer-container .delete-icon {
+  color: #ff6b6b;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 .timer-and-reports {
   display: flex;
   gap: 60px;
@@ -54,7 +183,7 @@
 }
 
 .timer-button {
-  background-color: #2d86e0;
+  background-color: #95bdf2;
   color: #fff;
   border: none;
   padding: 12px 24px;
@@ -98,7 +227,7 @@
 
 .exit-session-button {
   margin-top: 30px;
-  background-color: #ff6347;
+  background-color: #95bdf2;
   color: #fff;
   border: none;
   padding: 12px 24px;
@@ -160,7 +289,7 @@
 }
 
 .progress {
-  background-color: #2d86e0;
+  background-color: #95bdf2;
   height: 100%;
   transition: width 0.5s ease;
 }
