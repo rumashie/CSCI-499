@@ -11,7 +11,14 @@ const CalendarView = () => {
     const [editingEvent, setEditingEvent] = useState({ id: '', title: '', startDate: '', startTime: '', endDate: '', endTime: '' });
     const [isAdding, setIsAdding] = useState(false);
     const [newEvent, setNewEvent] = useState({ title: '', startDate: '', startTime: '', endDate: '', endTime: '' });
+    const [currentDate, setCurrentDate] = useState('');
     
+    // gets the currrent date and stores it so that it can be displayed later
+    useEffect(() => {
+        const date = new Date();
+        const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        setCurrentDate(formattedDate);
+    }, []);
 
     // sends a fetch request to the flask app to call a function that will return the list of 
     // calendars on the user's google calendar for the drop down box
@@ -159,7 +166,7 @@ const CalendarView = () => {
     
     return (
         <div className="calendar-view">
-            <h2>March 2024</h2>
+            <h2>{currentDate}</h2>
             <div className="controls">
                 <select
                     value={selectedCalendar}
