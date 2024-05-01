@@ -122,7 +122,7 @@ def init_messages(message_log):
         "role": "system",
         "content": classifier
     }
-    # Check if the message_log is empty or the first message is not the classifier
+    # check if the message_log is empty or the first message is not the classifier
     if not message_log or message_log[0] != classifier_message:
         message_log.insert(0, classifier_message)
 
@@ -134,19 +134,19 @@ sends the response to the proccess_response function to determine if any action
 is required if not then it will return a response
 """
 def handle_message(user_input, message_log, tts_enabled=False):
-    # Append the user message to the message log
+    # append the user message to the message log
     message_log.append({"role": "user", "content": user_input})
     # Process the message through the OpenAI API
     chat_completion = client.chat.completions.create(
         messages=message_log,
         model="gpt-3.5-turbo"
     )
-    # Extract the response
+    # extract the response
     reply = chat_completion.choices[0].message.content
     message_log.append({"role": "assistant", "content": reply})
-    # Process the response to determine action
+    # process the response to determine action
     response_text = process_response(reply, message_log, user_input)
-    # Return a dictionary containing the chatbot's response and any action taken
+    # return a dictionary containing the chatbot's response and any action taken
     return {"response": response_text}
 
 """
@@ -156,7 +156,7 @@ the function and respond with if the action was sucessful or if it was not
 """
 def process_response(reply, message_log, user_input):
     info = reply.split(", ")
-    # Based on the action, call the appropriate function and generate a response
+    # based on the action, call the appropriate function and generate a response
     if info[0] == "Create calendar":
         text = create_calendar(info[1], service)
     
