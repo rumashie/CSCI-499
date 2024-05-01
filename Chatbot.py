@@ -8,7 +8,6 @@ import constants
 from GoogleCalendar import create_calendar, delete_calendar, create_event, delete_event, edit_event, calendar_information
 from Google import create_service
 from Spotify import get_token, play_song, create_playlist
-from weather import get_forecast
 from speech_to_text import speech_to_text, text_to_speech
 
 
@@ -180,9 +179,6 @@ def process_response(reply, message_log, user_input):
             text = create_playlist(info[1], info[2])
         else:
             text = create_playlist(info[1])
-    
-    elif info[0] == "get forecast":
-        get_forecast(info[1])
     elif info[0] == "Edit event":
         text = edit_event(info[1], info[2], user_input, service)
     elif info[0] == "Calendar_Information":
