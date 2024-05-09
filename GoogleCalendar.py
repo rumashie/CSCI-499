@@ -8,9 +8,10 @@ from Google import convert_to_datetime
 from speech_to_text import text_to_speech, speech_to_text
 from datetime import datetime
 import pytz
+from pytz import timezone
 from googleapiclient.errors import HttpError
 from dateutil.parser import parse
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 
 client = OpenAI(api_key = constants.APIKEY)
@@ -335,22 +336,44 @@ checks to see if there is any overlap when an event is added and adjusts the eve
     service: a service instance to utillize the Google API
 """    
 def adjust_events(calendar_id, new_event, existing_events, service):
-    # use parse to get the start and end times
-    new_event_start = parse(new_event['start'])
-    new_event_end = parse(new_event['end'])
-    # sort events by start time to handle them in order just to avoid any issues
-    existing_events.sort(key=lambda x: parse(x['start']))
-    #loops though the entire list of events to check if there is any overlap with the new event
+    eastern = pytz.timezone('America/New_York')  # Define the timezone
+
+    def safe_localize(dt):
+        # Function to safely localize datetime if it's naive
+        if dt.tzinfo is None or dt.tzinfo.utcoffset(dt) is None:
+            return eastern.localize(dt)
+        return dt
+
+    def is_outside_operational_hours(dt):
+        # Checks if the time is outside operational hours (before 8 AM or after 10 PM)
+        return dt.hour >= 22 or dt.hour < 8
+
+    # Localize the new event times
+    new_event_start = safe_localize(parse(new_event['start']))
+    new_event_end = safe_localize(parse(new_event['end']))
+    existing_events.sort(key=lambda x: safe_localize(parse(x['start'])))
+
+    events_updated = False  # Flag to indicate if any events were shifted to the next day
+
     for i, event in enumerate(existing_events):
-        event_start = parse(event['start'])
-        event_end = parse(event['end'])
+        event_start = safe_localize(parse(event['start']))
+        event_end = safe_localize(parse(event['end']))
         event_id = event['id']
-        # checks for overlap
+
+        # Check if there is an overlap
         if max(new_event_start, event_start) < min(new_event_end, event_end):
-            # if a overlap is detected then the event will be adjusted to make room for the new event
+            duration = event_end - event_start
             adjusted_start = new_event_end
-            adjusted_end = adjusted_start + (event_end - event_start)
-            # update the event through the Google Calendar API
+
+            # Determine if adjustment needs to push the event to the next day
+            if is_outside_operational_hours(adjusted_start):
+                next_day = adjusted_start.date() + timedelta(days=1)
+                # Adjust start time to 8:00 AM, and subtract 56 minutes
+                adjusted_start = datetime(next_day.year, next_day.month, next_day.day, 8, 0, 0, tzinfo=eastern) - timedelta(minutes=56)
+                events_updated = True  # Mark that we have pushed an event to the next day
+
+            adjusted_end = adjusted_start + duration
+
             updated_event = {
                 'summary': event['title'],
                 'start': {'dateTime': adjusted_start.isoformat(), 'timeZone': 'America/New_York'},
@@ -363,37 +386,14 @@ def adjust_events(calendar_id, new_event, existing_events, service):
             }
             try:
                 service.events().update(calendarId=calendar_id, eventId=event_id, body=updated_event).execute()
-            except HttpError as error:
+            except Exception as error:
                 print(f"Failed to update event: {error}")
                 continue
-            # updates the exisiting variable to hold the end time of the newly shifted event
-            new_event_end = adjusted_end
-            # checks on future events to see if the shifted event caused any overlaps
-            for j in range(i+1, len(existing_events)):
-                sub_event = existing_events[j]
-                sub_event_start = parse(sub_event['start'])
-                sub_event_end = parse(sub_event['end'])
-                # checks for overlap
-                if adjusted_end > sub_event_start:
-                    # adjusts the event to eliminate the overlap
-                    new_sub_event_start = adjusted_end
-                    new_sub_event_end = new_sub_event_start + (sub_event_end - sub_event_start)
-                    sub_event_update = {
-                        'summary': sub_event['title'],
-                        'start': {'dateTime': new_sub_event_start.isoformat(), 'timeZone': 'America/New_York'},
-                        'end': {'dateTime': new_sub_event_end.isoformat(), 'timeZone': 'America/New_York'},
-                        'description': sub_event.get('description', ''),
-                        'status': 'confirmed',
-                        'colorId': sub_event.get('colorId', '1'),
-                        'transparency': 'opaque',
-                        'visibility': 'private',
-                    }
-                    service.events().update(calendarId=calendar_id, eventId=sub_event['id'], body=sub_event_update).execute()
-                    # updates the variable to keep looping through the event list to check for any more overlaps
-                    adjusted_end = new_sub_event_end
-                else:
-                    # if there are no more overlaps then the function is done
-                    break
+
+            # After adjusting one event to the next day, check if further adjustments are needed
+            if events_updated:
+                break  # Exit the loop early if we've already moved events to the next day
+
     return True
 
 """
