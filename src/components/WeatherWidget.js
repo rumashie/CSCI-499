@@ -1,3 +1,5 @@
+<!-- Use weather free api change q= to your state. Converts C to F and displays image of the weather -->
+
 import React, { useState, useEffect } from 'react';
 import './WeatherWidget.css';
 
