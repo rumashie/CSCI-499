@@ -1,3 +1,5 @@
+//set your daily goals of studying. measure/see your stats on how much you studied/what you accomplished. 
+
 import React, { useState, useEffect, useRef } from 'react';
 import './StudyMode.css';
 import { Line } from 'react-chartjs-2';
