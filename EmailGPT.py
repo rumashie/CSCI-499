@@ -11,6 +11,11 @@ from google.auth.transport.requests import Request
 client = OpenAI(api_key="ENTERYOURKEY")
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/gmail.send']
 
+"""
+Used to create and authenticate a servicee for a Google API using OAuth 2.0 from the Google Cloud Console
+very similar to google calender auth but it focus on GMAIL.
+"""
+
 def get_email_summaries(search_query=''):
     creds = None
     if os.path.exists('token.json'):
@@ -29,7 +34,10 @@ def get_email_summaries(search_query=''):
     messages = results.get('messages', [])
 
     email_summaries = []
-
+"""
+Pulls recent emails and parse to OEPNAI to summarize. Adjust token limit (set to 12000) to more emails or incomplete summarizes/blanks responses.
+We have it set by maxResults to 5 recent emails in primary inbox but can be adjust to promotions, social inboxes.
+"""
     for message in messages:
         msg = service.users().messages().get(userId='me', id=message['id']).execute()
         payload = msg['payload']
@@ -59,6 +67,7 @@ def get_email_summaries(search_query=''):
         else:
             body = base64.urlsafe_b64decode(payload['body']['data']).decode('UTF-8')
 
+        
         max_tokens = 12000
         body = body[:max_tokens]
 
@@ -75,7 +84,9 @@ def get_email_summaries(search_query=''):
             temperature=0.7
         )
         summary = response.choices[0].message.content.strip()
-
+"""
+Mark email based on priority red circle and blue for less urgent emails
+"""
         priority = 'low'
         keywords = ['meeting', 'deadline', 'urgent', 'important', 'order', 'school', 'money', 'zoom', 'payment', 'job']
         if any(keyword in subject.lower() or keyword in body.lower() for keyword in keywords):
@@ -97,6 +108,11 @@ def get_email_summaries(search_query=''):
             filtered_email_summaries.append(email)
 
     return filtered_email_summaries
+
+"""
+Used to send emails directly from frontend using your email. This works 50/50 needs to be adjusted/better auth handling. 
+    
+"""
 
 def send_email_response(email_id, response):
     creds = None
