@@ -29,6 +29,8 @@ paste the url of the page you were redirected too and paste it in the terminal
 - in another terminal cd into your react app and run it.
 - you will then be sent to the login screen where you can login or create an account to gain access to the dashboard with all of its functionality
 
+## Bugs/Issues
+- If the chatbot is asked a question about your google calendar it can give incorrect information as it will try to give filler text instead of looking at your calendar 
 
 ### Contributors
 - Leonardo Gonzalez Luzon
