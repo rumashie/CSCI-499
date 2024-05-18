@@ -1,3 +1,5 @@
+//nav bar for our web app
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaTasks, FaCalendarAlt, FaChartPie, FaUsers, FaQuestionCircle } from 'react-icons/fa';
