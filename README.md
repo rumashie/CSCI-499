@@ -30,14 +30,19 @@ paste the url of the page you were redirected too and paste it in the terminal
 - you will then be sent to the login screen where you can login or create an account to gain access to the dashboard with all of its functionality
 
 ## Bugs/Issues
-- If the chatbot is asked a question about your google calendar it can give incorrect information as it will try to give filler text instead of looking at your calendar 
+- If the chatbot is asked a question about your google calendar it can give incorrect information as it will try to give filler text instead of looking at your calendar.
+- May be connection/auth issue when sending an email chatGPT email inbox.
+- Button settings has no use at the moment everything is done via backend code setting up API/connection
 
 ### Contributors
 - Leonardo Gonzalez Luzon
 - Massiel Sanchez
 - Bergen Bartolomeo
 
-
+## Tests 
+- Frontend responsive and reactive on major desktop / mobile display sizes correctly. Tested with multiple user agents such firefox, chrome, and safari.
+- Tested react components and they all render.
+- Tested DB with large amount of user logins.
 
 # Getting Started with Create React App
 
