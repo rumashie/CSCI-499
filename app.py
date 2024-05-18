@@ -93,6 +93,10 @@ def create_event_route(calendar_id):
     response = create_event_front(calendar_id, data['title'], data['start'], data['end'], service)
     return jsonify({'message': response}), 200
 
+"""
+for email summarizer route pulls emails from your gmail here and displays to frontend. Also send's email from the frontend.
+    
+"""
 @app.route('/email-summaries', methods=['GET'])
 def get_email_summaries_route():
     email_summaries = get_email_summaries()
@@ -107,6 +111,10 @@ def respond_to_email():
     return jsonify({'message': 'Email sent successfully'})
 
 
+"""
+Used to search through your inbox of emails
+    
+"""
 @app.route('/email-summaries-search', methods=['GET'])
 def get_email_summaries_search_route():
     search_query = request.args.get('search', '')
