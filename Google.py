@@ -5,6 +5,7 @@ Developed by: Leonardo Gonzalez Luzon
 
 import os
 from datetime import datetime
+import pytz
 from collections import namedtuple
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -31,7 +32,7 @@ def create_service(client_secret_file, api_name, api_version, *scopes, prefix=''
     token_dir = 'token files'
     token_file = f'token_{API_SERVICE_NAME}_{API_VERSION}{prefix}.json'
 
-    # Check if token dir exists first, if not, create the folder
+    # checks if a token folder exists first, if not, create the folder
     if not os.path.exists(os.path.join(working_dir, token_dir)):
         os.mkdir(os.path.join(working_dir, token_dir))
 
@@ -48,7 +49,7 @@ def create_service(client_secret_file, api_name, api_version, *scopes, prefix=''
             creds = flow.run_local_server(port=0)
         with open(os.path.join(working_dir, token_dir, token_file), 'w') as token:
             token.write(creds.to_json())
-    # Attempts to run a service instance using the build function from the Google API and returns that instance if creation was successful
+    # attempts to run a service instance using the build function from the Google API and returns that instance if creation was successful
     try:
         service = build(API_SERVICE_NAME, API_VERSION, credentials=creds, static_discovery=False)
         return service

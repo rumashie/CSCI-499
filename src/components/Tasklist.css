@@ -1,7 +1,13 @@
 .task-list {
-  background-color: #2c2c2c;
+  background-color: #1c1c1e;
   padding: 20px;
   border-radius: 8px;
+  color: #fff;
+}
+
+.task-list h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
 .task-list-items {
@@ -9,24 +15,53 @@
 }
 
 .task-item {
-  background-color: #3c3c3c;
+  display: flex;
+  align-items: center;
   padding: 10px;
-  margin-bottom: 10px;
   border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #202024;
 }
 
-.task-item h3 {
+.task-checkbox {
+  margin-right: 10px;
+}
+
+.task-checkbox input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.task-checkbox input[type="checkbox"]:checked {
+  background-color: #2d86e0;
+  border-color: #2d86e0;
+}
+
+.task-details {
+  flex: 1;
+}
+
+.task-details h3 {
   margin: 0;
 }
 
-.task-item p {
-  margin: 5px 0 0;
-  color: #aaa;
+.task-actions {
+  margin-left: 10px;
+}
+
+.delete-icon {
+  color: #ff6b6b;
+  cursor: pointer;
 }
 
 .task-input-container {
   display: flex;
-  margin-bottom: 20px;
+  align-items: center;
 }
 
 #task-input {
@@ -34,20 +69,55 @@
   padding: 10px;
   border: none;
   border-radius: 4px;
-  background-color: #444;
+  background-color: #2c2c2e;
   color: #fff;
+  margin-right: 10px;
 }
 
 .add-task-button {
   background-color: #2d86e0;
   color: #fff;
   border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .add-task-button:hover {
-  background-color: #333;
+  background-color: #1c68b3;
+}
+
+.plus-icon {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+}
+
+.priority-flag {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.priority-flag.low {
+  background-color: #4caf50;
+}
+
+.priority-flag.medium {
+  background-color: #ffc107;
+}
+
+.priority-flag.high {
+  background-color: #f44336;
+}
 }

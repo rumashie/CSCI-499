@@ -1,8 +1,12 @@
 .sidebar {
-  background-color: #222;
+  background-color: #1c1c1e;
   color: #fff;
   padding: 20px;
-  width: 200px;
+  width: 240px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
 .sidebar ul {
@@ -12,21 +16,29 @@
 }
 
 .sidebar li {
-  margin-bottom: 35px;
+  margin-bottom: 20px;
 }
 
 .sidebar a {
   color: #fff;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: background-color 0.3s ease;
   display: flex;
   align-items: center;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.sidebar a:hover {
-  color: #46ceba;
+.sidebar a:hover,
+.sidebar a.active {
+  background-color: #2d86e0;
 }
 
 .icon {
   margin-right: 10px;
+  font-size: 20px;
+}
+
+.sidebar span {
+  font-size: 16px;
 }

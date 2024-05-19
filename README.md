@@ -4,16 +4,14 @@
 ### OpenAPI
 - Get an API key at https://platform.openai.com/api-keys
 - Go to constants.py and change the variable APIKEY with the secret key given on the website
+- If this doesn't work then contact one of us
 
 ### GoogleAPI
 - Client_secret.json is provided with the necessary key
-- When the program is first run you will have to go through authentication in order for the 
-google api to access your google calendar
+- When the program is first run you will have to go through authentication proccess that will start with a window opening in your browser
 - If you receive a prompt that says "Google hasn’t verified this app", click continue to give 
-access to your google calendar
-- If you receive a prompt that says "Access blocked: CSCI499 App has not completed the Google 
-verification process", send one of us a message with the email that you are using for this application
-so we can added you as one of the test users on the Google console
+- If you receive a prompt that says "Access blocked: CSCI499 App has not completed the Google verification process", send one of us a message with the email that you are using for this authentication so we can added you as one of the test users on the Google console
+- If you recieve an error about the token try to delete the token files folder and restart the app
 
 ### Spotify API
 - Get the Client_ID and Client_Secret at https://developer.spotify.com/dashboard
@@ -23,44 +21,28 @@ and paste it into the associated variable(you can find your username by going to
 create a playlist on you spotify account, in the terminal it will ask you to input the url, just copy and
 paste the url of the page you were redirected too and paste it in the terminal
 
-### Weather API
-- Make sure to have your API key https://openweathermap.org/api. You can use ours for the time being listed in constants.py.
-- Make sure you are running Chatbot then you can ask anything related to the weather. In order to get the weather you must prompt full city in order for it to work.
-- For instance "What is the weather in New York" it will return 3 hour forecast for the next 5 days. NY is not a valid for API, and it will be prompted full city name New York, Paris, etc.
-
 ## Running the code
-### Chatbot
-- first install all of the requried librarys that are on requirements.txt (pip install -r requirements.txt)
-- In order to use the chatbot just run the Chatbot.py file
-- It will first prompt you to give access to your google calendar to complete authentication
-- After authentication you can type in the terminal your message and the chatbot will respond to 
-the best of its ability
+- make a virtual environment(venv) and activate it
+- set up a react app (instructions below) and replace the public and src files with the ones you pulled from github
+- install the python packages(use "pip install -r requirements.txt" without quotes)
+- then run app.py 
+- in another terminal cd into your react app and run it.
+- you will then be sent to the login screen where you can login or create an account to gain access to the dashboard with all of its functionality
 
-## Contributions
-### Leonardo Gonzalez Luzon
-- Chatbot.py
-- GoogleCalendar.py
-- Google.py
-- Spotify.py
-- speech_to_text.py
+## Bugs/Issues
+- If the chatbot is asked a question about your google calendar it can give incorrect information as it will try to give filler text instead of looking at your calendar.
+- May be connection/auth issue when sending an email chatGPT email inbox.
+- Button settings has no use at the moment everything is done via backend code setting up API/connection
 
-### Massiel
-- Database Model
-- Create Database Tables
-- Registration page linked with Database (User information is stored in Database)
-- Linked login.html and signup.html
-- Added Error Handling to user login and signup
+### Contributors
+- Leonardo Gonzalez Luzon
+- Massiel Sanchez
+- Bergen Bartolomeo
 
-### Bergen
-
-- weather.py Added weather function to Chatbot.py. Must enter city name in order to get data. 
-- login.css Login Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online as I don't have access to it nor code base) Will be updated shortly.
-- login.html
-- signup.html Sign Up Page Needs to be hooked up to DB (DB is on Massiel local, needs to be hosted online)
-- signup.css
-- task.html Task Manager to add via UI, (flask will be used tied with Leo's/ my code to make it more efficent from frontend)
-- task.css
-- task.js - (Remind every hour, to take a break react.js more features will be addes shortly this week)
+## Tests 
+- Frontend responsive and reactive on major desktop / mobile display sizes correctly. Tested with multiple user agents such firefox, chrome, and safari.
+- Tested react components and they all render.
+- Tested DB with large amount of user logins.
 
 # Getting Started with Create React App
 
@@ -132,3 +114,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+Screenshots: 
+
+<img width="1314" alt="Screen Shot 2024-05-13 at 9 50 15 AM" src="https://github.com/rumashie/CSCI-499/assets/36686123/7f2f7f49-e23b-4000-84e3-adcb2e66f29a">
+
+<img width="1314" alt="Screen Shot 2024-05-13 at 9 51 59 AM" src="https://github.com/rumashie/CSCI-499/assets/36686123/722f9101-d625-482d-8830-49dab7f55edd">
+
+
