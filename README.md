@@ -34,10 +34,24 @@ paste the url of the page you were redirected too and paste it in the terminal
 - May be connection/auth issue when sending an email chatGPT email inbox.
 - Button settings has no use at the moment everything is done via backend code setting up API/connection
 
-### Contributors
-- Leonardo Gonzalez Luzon
-- Massiel Sanchez
-- Bergen Bartolomeo
+### Contributions
+## Leonardo Gonzalez Luzon
+- Chatbot.py
+- Google.py
+- GoogleCalendar.py
+- Spotify.py
+- app.py
+- speech_to_text.py
+- test_app.py
+- test_chatbot.py
+- test_google_calendar.py
+- test_spotify.py
+- CalendarView.js/css
+- WidgetSection.js/css (this is basically the frontend for the chatbot)
+
+## Massiel Sanchez
+
+## Bergen Bartolomeo
 
 ## Tests 
 - Unit test functions for app.py Chatbot.py GoogleCalendar.py and Spotify.py are in the appropriate test file. These tests can run by using python -m unittest test_spotify.py substituting the name with whatever file you want to test
