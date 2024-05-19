@@ -16,25 +16,25 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/upcoming" activeClassName="active">
+          <NavLink to="/dashboard/upcoming" activeClassName="active">
             <FaCalendarAlt className="icon" />
             <span>Upcoming tasks</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/productivity" activeClassName="active">
+          <NavLink to="/dashboard/productivity" activeClassName="active">
             <FaChartPie className="icon" />
             <span>Productivity</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/collaborators" activeClassName="active">
+          <NavLink to="/dashboard/collaborators" activeClassName="active">
             <FaUsers className="icon" />
             <span>Collaborators</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/help" activeClassName="active">
+          <NavLink to="/dashboard/help" activeClassName="active">
             <FaQuestionCircle className="icon" />
             <span>Help</span>
           </NavLink>

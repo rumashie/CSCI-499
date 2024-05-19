@@ -1,38 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import TaskList from './components/Tasklist';
-import CalendarView from './components/CalendarView';
-import WidgetSection from './components/WidgetSection';
-import StudyMode from './components/StudyMode';
-import WeatherWidget from './components/WeatherWidget';
-import EmailSummarizer from './components/EmailSummarizer';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Dashboard from './components/Dashboard'; 
 
 function App() {
+  localStorage.removeItem('authenticated');
+
   return (
     <Router>
-      <div className="app">
-        <Header />
-        <div className="content">
-          <Sidebar />
-          <div className="main-content">
-            <Routes>
-              <Route path="/productivity" element={<StudyMode />} />
-              <Route path="/collaborators" element={<EmailSummarizer />} />
-              <Route path="/" element={
-                <>
-                  <TaskList />
-                  <CalendarView />
-                  <WidgetSection />
-                  <WeatherWidget />
-                </>
-              } />
-            </Routes>
-          </div>
-        </div>
-      </div>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard/*" element={<Dashboard />} /> 
+        <Route path="/" element={<Navigate replace to="/login" />} />
+      </Routes>
     </Router>
   );
 }

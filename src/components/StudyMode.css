@@ -1,309 +1,309 @@
 .session-timer-container {
-  background-color: #1c1c1e;
-  color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.session-timer-container h2 {
-  margin: 0 0 20px;
-  font-size: 32px;
-  font-weight: bold;
-}
-
-.progress-tracker {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.progress-column {
-  flex: 1;
-  padding: 15px;
-  background-color: #141414;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.progress-column:last-child {
-  margin-right: 0;
-}
-
-.progress-column h3 {
-  margin: 0 0 10px;
-  font-size: 18px;
-}
-
-.session-timer-container .task-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.session-timer-container .task-list li {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 8px;
-  background-color: #303132;
-  transition: background-color 0.3s ease;
-  background-color: #272b2e;
-}
-
-.session-timer-container .task-list li:hover {
-  background-color: #3c3c3c;
-}
-
-.session-timer-container .task-list li.selected {
-  background-color: #95bdf2;
-  color: #fff;
-}
-
-.session-timer-container .task-list li .priority-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.session-timer-container .task-list li .priority-dot.low {
-  background-color: #4caf50;
-}
-
-.session-timer-container .task-list li .priority-dot.medium {
-  background-color: #ffc107;
-}
-
-.session-timer-container .task-list li .priority-dot.high {
-  background-color: #f44336;
-}
-
-.session-timer-container .task-list li .task-title {
-  flex: 1;
-}
-
-.session-timer-container .priority-select {
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #000000;
-  color: #7b7b7b;
-  margin-right: 10px;
-}
-
-.session-timer-container .task-input-container {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.session-timer-container #task-input {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #000000;
-  color: #fff;
-  margin-right: 10px;
-}
-
-.session-timer-container .add-task-button {
-  background-color: #95bdf2;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.session-timer-container .add-task-button:hover {
-  background-color: #1c68b3;
-}
-
-.session-timer-container .plus-icon {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.session-timer-container .delete-icon {
-  color: #ff6b6b;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.timer-and-reports {
-  display: flex;
-  gap: 60px;
-}
-
-.timer-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.timer-controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.input-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.input-group label {
-  margin-right: 10px;
-  font-size: 18px;
-}
-
-.input-field {
-  background-color: #2c2c2e;
-  color: #fff;
-  border: 1px solid #666;
-  border-radius: 4px;
-  padding: 10px;
-  width: 80px;
-  text-align: center;
-  font-size: 18px;
-}
-
-.timer-button {
-  background-color: #95bdf2;
-  color: #fff;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 18px;
-  margin-top: 20px;
-}
-
-.timer-button.running {
-  background-color: #ff6347;
-}
-
-.timer-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.session-progress-bar {
-  position: relative;
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 40px;
-  overflow: hidden;
-}
-
-.timer-value {
-  font-size: 48px;
-  font-weight: bold;
-}
-
-.remaining-text {
-  margin-top: 20px;
-  font-size: 18px;
-}
-
-.exit-session-button {
-  margin-top: 30px;
-  background-color: #95bdf2;
-  color: #fff;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 18px;
-}
-
-.exit-session-button:hover {
-  background-color: #cc4d39;
-}
-
-.reports-section {
-  flex: 1;
-}
-
-.productivity-reports {
-  width: 100%;
-}
-
-.averages {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 30px;
-  font-size: 18px;
-}
-
-.goals {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.goals .input-group {
-  display: flex;
-  align-items: center;
-}
-
-.goals label {
-  margin-right: 10px;
-  font-size: 18px;
-}
-
-.progress-bars {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-.progress-bar {
-  background-color: #2c2c2e;
-  height: 30px;
-  border-radius: 15px;
-  overflow: hidden;
-  position: relative;
-}
-
-.progress {
-  background-color: #95bdf2;
-  height: 100%;
-  transition: width 0.5s ease;
-}
-
-.progress-label {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  font-size: 16px;
-}
-
-.chart-container {
-  width: 100%;
-  height: 400px;
-}
+    background-color: #1c1c1e;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .session-timer-container h2 {
+    margin: 0 0 20px;
+    font-size: 32px;
+    font-weight: bold;
+  }
+  
+  .progress-tracker {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .progress-column {
+    flex: 1;
+    padding: 15px;
+    background-color: #141414;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .progress-column:last-child {
+    margin-right: 0;
+  }
+  
+  .progress-column h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+  }
+  
+  .session-timer-container .task-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .session-timer-container .task-list li {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #303132;
+    transition: background-color 0.3s ease;
+    background-color: #272b2e;
+  }
+  
+  .session-timer-container .task-list li:hover {
+    background-color: #3c3c3c;
+  }
+  
+  .session-timer-container .task-list li.selected {
+    background-color: #95bdf2;
+    color: #fff;
+  }
+  
+  .session-timer-container .task-list li .priority-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .session-timer-container .task-list li .priority-dot.low {
+    background-color: #4caf50;
+  }
+  
+  .session-timer-container .task-list li .priority-dot.medium {
+    background-color: #ffc107;
+  }
+  
+  .session-timer-container .task-list li .priority-dot.high {
+    background-color: #f44336;
+  }
+  
+  .session-timer-container .task-list li .task-title {
+    flex: 1;
+  }
+  
+  .session-timer-container .priority-select {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #000000;
+    color: #7b7b7b;
+    margin-right: 10px;
+  }
+  
+  .session-timer-container .task-input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .session-timer-container #task-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #000000;
+    color: #fff;
+    margin-right: 10px;
+  }
+  
+  .session-timer-container .add-task-button {
+    background-color: #95bdf2;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .session-timer-container .add-task-button:hover {
+    background-color: #1c68b3;
+  }
+  
+  .session-timer-container .plus-icon {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .session-timer-container .delete-icon {
+    color: #ff6b6b;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .timer-and-reports {
+    display: flex;
+    gap: 60px;
+  }
+  
+  .timer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .timer-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .input-group label {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  
+  .input-field {
+    background-color: #2c2c2e;
+    color: #fff;
+    border: 1px solid #666;
+    border-radius: 4px;
+    padding: 10px;
+    width: 80px;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  .timer-button {
+    background-color: #95bdf2;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
+  .timer-button.running {
+    background-color: #ff6347;
+  }
+  
+  .timer-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .session-progress-bar {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    overflow: hidden;
+  }
+  
+  .timer-value {
+    font-size: 48px;
+    font-weight: bold;
+  }
+  
+  .remaining-text {
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  .exit-session-button {
+    margin-top: 30px;
+    background-color: #95bdf2;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+  }
+  
+  .exit-session-button:hover {
+    background-color: #cc4d39;
+  }
+  
+  .reports-section {
+    flex: 1;
+  }
+  
+  .productivity-reports {
+    width: 100%;
+  }
+  
+  .averages {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    font-size: 18px;
+  }
+  
+  .goals {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .goals .input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .goals label {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  
+  .progress-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .progress-bar {
+    background-color: #2c2c2e;
+    height: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .progress {
+    background-color: #95bdf2;
+    height: 100%;
+    transition: width 0.5s ease;
+  }
+  
+  .progress-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 16px;
+  }
+  
+  .chart-container {
+    width: 100%;
+    height: 400px;
+  }

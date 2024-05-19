@@ -1,15 +1,16 @@
-.app {
+/* Styles specific to the dashboard route */
+.dashboard .app {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
-.content {
+.dashboard .content {
   display: flex;
   flex: 1;
 }
 
-.main-content {
+.dashboard .main-content {
   flex: 1;
   padding: 70px;
   background-color: #202024;
@@ -17,7 +18,4 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
-  margin-left: 240px; 
 }
-
-
