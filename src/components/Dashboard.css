@@ -1,0 +1,23 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    width: 100vw;
+  }
+  
+  .content {
+    display: flex;
+    flex: 1;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 70px;
+    background-color: #202024;
+    color: #fff;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    margin-left: 240px; 
+    overflow: auto;
+  }

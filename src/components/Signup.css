@@ -1,0 +1,69 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #191919;
+}
+
+section {
+    width: 300px;
+    padding: 40px;
+    background-color: #191918;
+    text-align: center;
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgb(134, 151, 187);
+    border-radius: 1em;
+    box-shadow: 10px 10px 2px 1px rgb(37, 42, 52);
+}
+
+h1 {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.5em;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] 
+{
+    background-color: #212121;
+    margin: 10px 0;
+    border: 2px solid;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-color: rgb(165, 222, 229);
+    color: white;
+    border-radius: 2em;
+    width: calc(100% - 40px); /* Adjust width */
+    box-sizing: border-box; /* Keeps fields size the same */
+}
+
+button {
+    background: none;
+    color: #b3f2f2;
+    border: 2px solid;
+    padding: 10px 20px;
+    font-size: 1em;
+    transition: all 500ms;
+    border-radius: 2em;
+    cursor: pointer;
+}
+
+button:hover {
+    border-color: rgb(131, 237, 237);
+    color: white;
+    box-shadow: 0 0.5em 0.5em -0.4em aquamarine;
+    transform: translateY(-.15em);
+}
+
+#back-to-Login-Link{
+    position: relative;
+    left: 120px; /* bigger number to move to the right*/
+    top: 30px;  /* bigger number to move more down*/
+    color: #b3f2f2; 
+    font-size: .9em;
+
+}
