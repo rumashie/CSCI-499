@@ -23,7 +23,7 @@ const CalendarView = () => {
     // sends a fetch request to the flask app to call a function that will return the list of 
     // calendars on the user's google calendar for the drop down box
     const fetchCalendars = useCallback(() => {
-        fetch('http://localhost:5000/calendars')
+        fetch('http://localhost:5001/calendars')
         .then((response) => response.json())
         .then(setCalendars)
         .catch((error) => console.error('Error fetching calendars:', error));
@@ -33,7 +33,7 @@ const CalendarView = () => {
     // that will return a list of events on the selected calendar
     const fetchEvents = useCallback(() => {
         if (selectedCalendar) {
-        fetch('http://localhost:5000/events', {
+        fetch('http://localhost:5001/events', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const CalendarView = () => {
     
     // calls on the flask app to use the delete event function to delete an event when the user clicks the x next to the specified event
     const handleDeleteEvent = (eventName, calendarName) => {
-        fetch(`http://localhost:5000/delete-event/${encodeURIComponent(calendarName)}/${encodeURIComponent(eventName)}`, {
+        fetch(`http://localhost:5001/delete-event/${encodeURIComponent(calendarName)}/${encodeURIComponent(eventName)}`, {
             method: 'DELETE',
         })
         .then(response => response.json())
@@ -107,7 +107,7 @@ const CalendarView = () => {
         }
         // if this is unchanged it will use the original value
         const title = editingEvent.title || editingEvent.originalTitle;
-        fetch(`http://localhost:5000/edit-event/${selectedCalendar}/${editingEvent.id}`, {
+        fetch(`http://localhost:5001/edit-event/${selectedCalendar}/${editingEvent.id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ const CalendarView = () => {
     const createNewEvent = () => {
         const start = `${newEvent.startDate}T${newEvent.startTime}:00-04:00`;
         const end = `${newEvent.endDate}T${newEvent.endTime}:00-04:00`;
-        fetch(`http://localhost:5000/create-event/${selectedCalendar}`, {
+        fetch(`http://localhost:5001/create-event/${selectedCalendar}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

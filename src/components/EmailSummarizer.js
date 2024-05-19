@@ -22,7 +22,7 @@ const EmailSummarizer = () => {
   useEffect(() => {
     const fetchEmailSummaries = async () => {
       try {
-        const response = await fetch('http://localhost:5000/email-summaries');
+        const response = await fetch('http://localhost:5001/email-summaries');
         const data = await response.json();
         setEmailSummaries(data);
         setSelectedEmail(data[0]);
@@ -50,7 +50,7 @@ const EmailSummarizer = () => {
         emailId: selectedEmail.id,
         response: response,
       };
-      const response = await fetch('http://localhost:5000/collab', {
+      const response = await fetch('http://localhost:5001/collab', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const EmailSummarizer = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/email-summaries-search?search=${searchQuery}`);
+      const response = await fetch(`http://localhost:5001/email-summaries-search?search=${searchQuery}`);
       const data = await response.json();
       setEmailSummaries(data);
       setSelectedEmail(data[0]);

@@ -109,6 +109,7 @@ const WidgetSection = () => {
 
     // sends and recieves chatbot messages through calling the functions from the chatbot file and then saves it to the message history
     const sendMessageToChatbot = async (text = inputMessage) => {
+        console.log("called send function")
         if (!text.trim()) return;
         setInputMessage('');
         setMessages(currentMessages => [
@@ -128,7 +129,7 @@ const WidgetSection = () => {
                 ttsEnabled: isTtsEnabled,
             };
 
-            const response = await fetch('http://localhost:5000/chat', {
+            const response = await fetch('http://localhost:5001/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

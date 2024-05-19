@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_cors import cross_origin
 from Chatbot import handle_message, init_messages
 from Google import create_service
 from GoogleCalendar import list_calendars, fetch_events, delete_event, edit_event_front, create_event_front
@@ -13,6 +14,7 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 app = Flask(__name__)
 CORS(app)
+
 
 """
 checks all of the users calendars on google calendar and returns them in a list,
@@ -122,4 +124,4 @@ def get_email_summaries_search_route():
     return jsonify(email_summaries)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
