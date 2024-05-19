@@ -40,6 +40,12 @@ paste the url of the page you were redirected too and paste it in the terminal
 - Bergen Bartolomeo
 
 ## Tests 
+- Unit test functions for app.py Chatbot.py GoogleCalendar.py and Spotify.py are in the appropriate test file. These tests can run by using python -m unittest test_spotify.py substituting the name with whatever file you want to test
+- test_app.py
+- test_chatbot.py
+- test_google_calendar.py
+- test_spotify.py
+
 - Frontend responsive and reactive on major desktop / mobile display sizes correctly. Tested with multiple user agents such firefox, chrome, and safari.
 - Tested react components and they all render.
 - Tested DB with large amount of user logins.
