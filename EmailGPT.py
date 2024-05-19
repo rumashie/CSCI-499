@@ -34,10 +34,10 @@ def get_email_summaries(search_query=''):
     messages = results.get('messages', [])
 
     email_summaries = []
-"""
-Pulls recent emails and parse to OEPNAI to summarize. Adjust token limit (set to 12000) to more emails or incomplete summarizes/blanks responses.
-We have it set by maxResults to 5 recent emails in primary inbox but can be adjust to promotions, social inboxes.
-"""
+    """
+    Pulls recent emails and parse to OEPNAI to summarize. Adjust token limit (set to 12000) to more emails or incomplete summarizes/blanks responses.
+     We have it set by maxResults to 5 recent emails in primary inbox but can be adjust to promotions, social inboxes.
+    """
     for message in messages:
         msg = service.users().messages().get(userId='me', id=message['id']).execute()
         payload = msg['payload']
@@ -84,9 +84,9 @@ We have it set by maxResults to 5 recent emails in primary inbox but can be adju
             temperature=0.7
         )
         summary = response.choices[0].message.content.strip()
-"""
-Mark email based on priority red circle and blue for less urgent emails
-"""
+        """
+        Mark email based on priority red circle and blue for less urgent emails
+        """
         priority = 'low'
         keywords = ['meeting', 'deadline', 'urgent', 'important', 'order', 'school', 'money', 'zoom', 'payment', 'job']
         if any(keyword in subject.lower() or keyword in body.lower() for keyword in keywords):
