@@ -1,5 +1,29 @@
 # CSCI-499
 
+## To run Program:
+This application consists of a React frontend and two backend servers - one implemented in Node.js and the other in Flask (Python).
+
+Navigate to the directory containing the application.
+To start the Node.js backend server:
+
+\`\`\`sh
+node server.js
+\`\`\`
+
+To start the Flask backend server:
+
+\`\`\`sh
+python app.py
+\`\`\`
+
+To start the React frontend app:
+
+\`\`\`sh
+npm start App.js
+\`\`\`
+
+
+
 ## API keys
 ### OpenAPI
 - Get an API key at https://platform.openai.com/api-keys
@@ -50,6 +74,11 @@ paste the url of the page you were redirected too and paste it in the terminal
 - WidgetSection.js/css (this is basically the frontend for the chatbot)
 
 ## Massiel Sanchez
+- server.js (Backend)
+- Login Component of React App
+- Sign up Component of React App
+- AWS Database: Database Schema, Database Routing
+- Integration of Login + Signup Components with larger React App, Had to reorganize App.js
 
 ## Bergen Bartolomeo
 
@@ -76,9 +105,6 @@ In the project directory, you can run:
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-Before running the application, ensure both the backend server and the frontend app are running:
-Start the backend server by running the command: `node server.js`.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
