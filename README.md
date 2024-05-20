@@ -49,9 +49,10 @@ paste the url of the page you were redirected too and paste it in the terminal
 
 
 ## Bugs/Issues
-- If the chatbot is asked a question about your google calendar it can give incorrect information as it will try to give filler text instead of looking at your calendar.
-- May be connection/auth issue when sending an email chatGPT email inbox.
-- Button settings has no use at the moment everything is done via backend code setting up API/connection
+- There may be connection/auth issue when sending an email chatGPT email inbox
+- Chatbot may give incorrect information as it will try to give filler text instead of looking at your calendar
+- Some buttons do not or features on the app are not fully implemented and may not trigger any action when clicked. They will be available in future updates
+- 
 
 ### Contributions
 ## Leonardo Gonzalez Luzon
