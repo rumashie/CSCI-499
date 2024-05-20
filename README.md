@@ -20,6 +20,8 @@ You will then be sent to the login screen where you can login or create an accou
 Make a virtual environment (venv) and activate it
 Install the Python packages using the following command:
   `pip install -r requirements.txt`
+
+In app.py, provide Path to client_secret.json file. 
   
 For more details on how to set up a react app there are instructions below.
 Replace the public and src files with the ones you pulled from github
