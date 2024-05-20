@@ -5,24 +5,13 @@ This application consists of a React frontend and two backend servers - one impl
 
 Navigate to the directory containing the application.
 To start the Node.js backend server:
-
-\`\`\`sh
 node server.js
-\`\`\`
 
 To start the Flask backend server:
-
-\`\`\`sh
 python app.py
-\`\`\`
 
 To start the React frontend app:
-
-\`\`\`sh
 npm start App.js
-\`\`\`
-
-
 
 ## API keys
 ### OpenAPI
