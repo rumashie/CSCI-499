@@ -11,7 +11,7 @@ To start the Flask backend server:
 'python app.py'
 
 To start the React frontend app:
-'npm start App.js'
+`npm start App.js`
 
 ## API keys
 ### OpenAPI
