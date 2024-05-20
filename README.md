@@ -49,10 +49,10 @@ paste the url of the page you were redirected too and paste it in the terminal
 
 
 ## Bugs/Issues
-- There may be connection/auth issue when sending an email chatGPT email inbox
+- There may be connection/auth issue when sending an email via user dashboard.
 - Chatbot may give incorrect information as it will try to give filler text instead of looking at your calendar
 - Some buttons do not or features on the app are not fully implemented and may not trigger any action when clicked. They will be available in future updates
-- 
+- We plan to fix these in the future.
 
 ### Contributions
 ## Leonardo Gonzalez Luzon
