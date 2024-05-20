@@ -52,6 +52,7 @@ paste the url of the page you were redirected too and paste it in the terminal
 - There may be connection/auth issue when sending an email via user dashboard.
 - Chatbot may give incorrect information as it will try to give filler text instead of looking at your calendar
 - Some buttons do not or features on the app are not fully implemented and may not trigger any action when clicked. They will be available in future updates
+- Users may lose authentication upon page refresh or when navigating back to Dashboard from certain URLs. Users will be redirected to Login Page, and have to log back in.
 - We plan to fix these in the future.
 
 ### Contributions
