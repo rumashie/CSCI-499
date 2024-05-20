@@ -1,3 +1,8 @@
+/* 
+Written: Massiel Sanchez
+Course: CSCI499
+server.js: Backend component to React App's Login and Sign-up component.
+*/
 const express = require('express');
 const path = require('path');
 const mysql = require('mysql');
@@ -40,6 +45,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT} ...`);
 });
 
+// Routing Associated with the Login Page: Query Database and Authorize User
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
 
@@ -82,6 +88,7 @@ app.post('/login', (req, res) => {
     });
 });
 
+// Routing Associated with SignUp Page: Add New User to the Database
 app.post('/signup', async (req, res) => {
     const { firstName, lastName, username, email, password } = req.body;
 
