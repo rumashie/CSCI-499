@@ -160,6 +160,7 @@ const CalendarView = () => {
     }, [fetchEvents]);
 
     const handleRefresh = () => {
+        console.log('Refreshing calendars and events');
         fetchCalendars();
         fetchEvents();
     };

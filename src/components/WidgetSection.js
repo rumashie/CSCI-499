@@ -68,21 +68,17 @@ const WidgetSection = () => {
                 sendMessageToChatbot(transcript);
                 setInputMessage('');
             };
-
             recognition.onstart = () => {
                 setIsListening(true);
             };
-
             recognition.onend = () => {
                 setIsListening(false);
             };
-
             recognition.onerror = (event) => {
                 console.error("Speech recognition error: ", event.error);
                 setIsListening(false);
             };
         }
-
         return () => {
             if (recognition) {
                 recognition.abort();
@@ -109,16 +105,13 @@ const WidgetSection = () => {
 
     // sends and recieves chatbot messages through calling the functions from the chatbot file and then saves it to the message history
     const sendMessageToChatbot = async (text = inputMessage) => {
-        console.log("called send function")
         if (!text.trim()) return;
         setInputMessage('');
         setMessages(currentMessages => [
             ...currentMessages,
             { from: 'user', text }
         ]);
-
         setIsLoading(true);
-
         try {
             const requestBody = {
                 message: text,
@@ -128,7 +121,6 @@ const WidgetSection = () => {
                 })),
                 ttsEnabled: isTtsEnabled,
             };
-
             const response = await fetch('http://localhost:5001/chat', {
                 method: 'POST',
                 headers: {
@@ -136,14 +128,11 @@ const WidgetSection = () => {
                 },
                 body: JSON.stringify(requestBody),
             });
-
             const data = await response.json();
-
             setMessages(currentMessages => [
                 ...currentMessages,
                 { from: 'assistant', text: data.response }
             ]);
-
             if (isTtsEnabledRef.current) {
                 const utterance = new SpeechSynthesisUtterance(data.response);
                 speechSynthesis.speak(utterance);

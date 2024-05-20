@@ -1,5 +1,6 @@
 import os
 import base64
+import constants
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -8,7 +9,7 @@ from googleapiclient.errors import HttpError
 from email.message import EmailMessage
 from google.auth.transport.requests import Request
 
-client = OpenAI(api_key="ENTERYOURKEY")
+client = OpenAI(api_key=constants.APIKEY)
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/gmail.send']
 
 """
@@ -17,16 +18,21 @@ very similar to google calender auth but it focus on GMAIL.
 """
 
 def get_email_summaries(search_query=''):
+    working_dir = os.getcwd()
+    client_secret = os.path.join(working_dir, "client_secret.json")
+    token_dir = 'token files'
+    token_file = 'token_gmail_v1.json'
+    folder = os.path.join(working_dir, token_dir, token_file)
     creds = None
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    if os.path.exists(folder):
+        creds = Credentials.from_authorized_user_file(folder, SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file('/Users/berg/Desktop/frontend/backend/client_secret.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(client_secret, SCOPES)
             creds = flow.run_local_server(port=0)
-        with open('token.json', 'w') as token:
+        with open(folder, 'w') as token:
             token.write(creds.to_json())
 
     service = build('gmail', 'v1', credentials=creds)
@@ -115,16 +121,21 @@ Used to send emails directly from frontend using your email. This works 50/50 ne
 """
 
 def send_email_response(email_id, response):
+    working_dir = os.getcwd()
+    client_secret = os.path.join(working_dir, "client_secret.json")
+    token_dir = 'token files'
+    token_file = 'token_gmail_v1.json'
+    folder = os.path.join(working_dir, token_dir, token_file)
     creds = None
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    if os.path.exists(folder):
+        creds = Credentials.from_authorized_user_file(folder, SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file('/Users/berg/Desktop/frontend/backend/client_secret.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(client_secret, SCOPES)
             creds = flow.run_local_server(port=0)
-        with open('token.json', 'w') as token:
+        with open(folder, 'w') as token:
             token.write(creds.to_json())
 
     service = build('gmail', 'v1', credentials=creds)

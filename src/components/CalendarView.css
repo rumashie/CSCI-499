@@ -85,17 +85,17 @@
 }
 
 .delete-button {
-  margin-left: 10px;
   background-color: #ff4d4d;
   color: white;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s ease;
 }
 
 .delete-button:hover {
@@ -104,12 +104,12 @@
 
 .edit-button {
   background-color: #ffffff;
-  color: white;
+  color: #2c2c2c;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,7 +163,7 @@
 .add-event-button {
   margin-left: 10px;
   padding: 5px 10px;
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 5px;
