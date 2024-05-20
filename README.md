@@ -47,6 +47,11 @@ and paste it into the associated variable(you can find your username by going to
 create a playlist on you spotify account, in the terminal it will ask you to input the url, just copy and
 paste the url of the page you were redirected too and paste it in the terminal
 
+#### Weather API 
+- Go to https://openweathermap.org/api
+- Create an account which is free and go to your account to retrive 5 Day / 3 Hour Forecast API key.
+- API docs and more info can be found at https://openweathermap.org/forecast5
+
 
 ## Bugs/Issues
 - There may be connection/auth issue when sending an email via user dashboard.
