@@ -77,6 +77,9 @@ paste the url of the page you were redirected too and paste it in the terminal
 - Integration of Login + Signup Components with larger React App, Had to reorganize App.js
 
 ## Bergen Bartolomeo
+- Frontend design and coded main dashboard (login, signup, user dashboard, Jarvis AI chatbot, weather, calender, tasks view)
+- Linking the frontend and working with the backend for Jarvis AI chatbot, calender view, weather, studymode tab, and AI gmail inbox feature  
+
 
 ## Tests 
 - Unit test functions for app.py Chatbot.py GoogleCalendar.py and Spotify.py are in the appropriate test file. These tests can run by using python -m unittest test_spotify.py substituting the name with whatever file you want to test
