@@ -4,29 +4,40 @@
 This application consists of a React frontend and two backend servers - one implemented in Node.js and the other in Flask (Python).
 
 Navigate to the directory containing the application.
+
 To start the Node.js backend server:
 `node server.js`
 
-To start the Flask backend server:
+In another terminal start the Flask backend server:
 `python app.py`
 
-To start the React frontend app:
+In another terminal start the React frontend app:
 `npm start App.js`
 
-## API keys
-### OpenAPI
+You will then be sent to the login screen where you can login or create an account to gain access to the dashboard with all of its functionality.
+
+## Set-Up
+Make a virtual environment (venv) and activate it
+Install the Python packages using the following command:
+  `pip install -r requirements.txt`
+  
+For more details on how to set up a react app there are instructions below.
+Replace the public and src files with the ones you pulled from github
+
+### API keys
+#### OpenAPI
 - Get an API key at https://platform.openai.com/api-keys
 - Go to constants.py and change the variable APIKEY with the secret key given on the website
 - If this doesn't work then contact one of us
 
-### GoogleAPI
+#### GoogleAPI
 - Client_secret.json is provided with the necessary key
 - When the program is first run you will have to go through authentication proccess that will start with a window opening in your browser
 - If you receive a prompt that says "Google hasn’t verified this app", click continue to give 
 - If you receive a prompt that says "Access blocked: CSCI499 App has not completed the Google verification process", send one of us a message with the email that you are using for this authentication so we can added you as one of the test users on the Google console
 - If you recieve an error about the token try to delete the token files folder and restart the app
 
-### Spotify API
+#### Spotify API
 - Get the Client_ID and Client_Secret at https://developer.spotify.com/dashboard
 - Go to constants.py and change the corrisponding variables with your own and also get your Spotify username
 and paste it into the associated variable(you can find your username by going to Edit profile on your account page)
@@ -34,13 +45,6 @@ and paste it into the associated variable(you can find your username by going to
 create a playlist on you spotify account, in the terminal it will ask you to input the url, just copy and
 paste the url of the page you were redirected too and paste it in the terminal
 
-## Running the code
-- make a virtual environment(venv) and activate it
-- set up a react app (instructions below) and replace the public and src files with the ones you pulled from github
-- install the python packages(use "pip install -r requirements.txt" without quotes)
-- then run app.py 
-- in another terminal cd into your react app and run it.
-- you will then be sent to the login screen where you can login or create an account to gain access to the dashboard with all of its functionality
 
 ## Bugs/Issues
 - If the chatbot is asked a question about your google calendar it can give incorrect information as it will try to give filler text instead of looking at your calendar.
