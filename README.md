@@ -78,7 +78,7 @@ We plan to fix these in the future.
 - Integration of Login + Signup Components with larger React App, Had to reorganize App.js
 
 ## Bergen Bartolomeo
-- Frontend design and coded main dashboard (login, signup, user dashboard, Jarvis AI chatbot, weather, calender, tasks view)
+- Frontend design and coded main dashboard in react (login, signup, user dashboard, Jarvis AI chatbot, weather, calender, tasks view)
 - Linking the frontend and working with the backend for Jarvis AI chatbot, calender view, weather, studymode tab, and AI gmail inbox feature  
 
 
