@@ -27,7 +27,7 @@ const pool = mysql.createPool({
     host: 'capstone.cdoge0oyalpz.us-east-1.rds.amazonaws.com',
     port: '3306',
     user: 'admin',
-    password: 'hunterhawk499',
+    password: ,
     database: 'capstone'
 });
 
